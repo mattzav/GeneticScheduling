@@ -1,70 +1,86 @@
+
+
 class Individual:
-    def __init__(self, genotype = [], fitness = -1):
-        if(fitness != -1):
+    def __init__(self, genotype = [], fitness = -1, objF = -1,sumA=-1,sumB=-1):
+        if(genotype != []):
             self.genotype = genotype
             self.fitness = fitness
+            self.objF = objF
+            self.sumA = sumA
+            self.sumB = sumB
         else:
             self.genotype = [0]*(nA+nB)
-
-
    
+def inverseMutation(individual):
+    [first_point,second_point] = sample(range(0, nA+nB), 2)
+    for j in range((max(first_point,second_point)-min(first_point,second_point))//2+1):
+        swap = individual.genotype[max(first_point,second_point)-j]
+        individual.genotype[max(first_point,second_point)-j] = individual.genotype[min(first_point,second_point)+j]
+        individual.genotype[min(first_point,second_point)+j] = swap
 
+def postOptimize(individual):
+    for i in range(nA+nB-1):
+        for j in range(i+1,nA+nB):
+            newSumA = individual.sumA
+            newSumB = individual.sumB
+            for k in range(i,j+1):
+                if(individual.genotype[i]<nA):
+                    newSumA = newSumA+p[individual.genotype[k]]*w[individual.genotype[i]]
+                else:
+                    newSumB = newSumB+p[individual.genotype[k]]*w[individual.genotype[i]]
 
-from random import seed
-from random import randint
-from random import uniform
-from random import shuffle
-from random import sample
-import copy
-import random as r
+                if(individual.genotype[j]<nA):
+                        newSumA = newSumA-p[individual.genotype[k]]*w[individual.genotype[j]]
+                else:
+                    newSumB = newSumB-p[individual.genotype[k]]*w[individual.genotype[j]]
+                if(k>i and k<j):
+                    if(individual.genotype[k]<nA):
+                        newSumA = newSumA+(p[individual.genotype[j]]-p[individual.genotype[i]])*w[individual.genotype[k]]
+                    else:
+                        newSumB = newSumB+(p[individual.genotype[j]]-p[individual.genotype[i]])*w[individual.genotype[k]]
+            if (individual.genotype[i]<nA):
+                newSumA = newSumA-p[individual.genotype[i]]*w[individual.genotype[i]]
+            else:
+                newSumB = newSumB-p[individual.genotype[i]]*w[individual.genotype[i]]
+            
+            if (individual.genotype[j]<nA):
+                newSumA = newSumA+p[individual.genotype[j]]*w[individual.genotype[j]]
+            else:
+                newSumB = newSumB+p[individual.genotype[j]]*w[individual.genotype[j]]
+            
+            objValue = abs(newSumA/nA-newSumB/nB)
+            if(objValue<individual.objF):
+                swap = individual.genotype[j]
+                individual.genotype[j] = individual.genotype[i]
+                individual.genotype[i] = swap
+                setattr(individual,"objF",objValue)
+                if(objValue <= 0):
+                    return
+                setattr(individual,"fitness",1/objValue)
+                setattr(individual,"sumA",newSumA)
+                setattr(individual,"sumB",newSumB)
 
-
-seed(2)
-
-sizePopulation = 10
-numIteration = 1
-population = []
-
-
-nA = 5
-nB = 4
-p = []
-w = []
-
-
-#init p and w
-for i in range(nA+nB):
-    p.append(randint(0,10))
-    w.append(randint(0,10))
-#end init p and w
-
-#init population
-totalInverseFitness = 0
-for i in range (sizePopulation):
-    value1_n = list(range(0,nA+nB))
-    shuffle(value1_n)
-
+def evaluateFitness(individual):
     cumulativeTime = 0
     sumA = 0
     sumB = 0
     
     for j in range(nA+nB):
 
-        cumulativeTime = cumulativeTime + p[value1_n[j]]
+        cumulativeTime = cumulativeTime + p[individual.genotype[j]]
         
-        if(value1_n[j]<nA):
-            sumA = sumA + cumulativeTime*w[value1_n[j]]
+        if(individual.genotype[j]<nA):
+            sumA = sumA + cumulativeTime*w[individual.genotype[j]]
         else:
-            sumB = sumB + cumulativeTime*w[value1_n[j]]
-    
-    individual = Individual(value1_n,1/abs(sumA/nA-sumB/nB))
-    population.append(individual)
+            sumB = sumB + cumulativeTime*w[individual.genotype[j]]
 
-    totalInverseFitness = totalInverseFitness + individual.fitness
-#end init population
+    setattr(individual,"fitness",1/abs(sumA/nA-sumB/nB))
+    setattr(individual,"objF",abs(sumA/nA-sumB/nB))
+    setattr(individual,"sumA",sumA)
+    setattr(individual,"sumB",sumB)
 
-population_next = []
-for i in range(numIteration):
+
+def rouletteWheel():
     #select using roulette wheel
     random1 = uniform(0,totalInverseFitness)
     random2 = uniform(0,totalInverseFitness)
@@ -80,72 +96,176 @@ for i in range(numIteration):
             second = copy.deepcopy(population[j])
             found2 = True
         cumulative = cumulative + population[j].fitness
+        if(found1 and found2):
+            break
     #end selection using roulette wheel
 
-    l=[1,2,3,4,5,6,7,8,9]
-    l = [x - 1 for x in l]
-    l1=[8,5,7,1,2,4,9,3,6]
-    
-    l1 = [x - 1 for x in l1]
-    setattr(first,"genotype",l)
-    setattr(second,"genotype",l1)
+    return [first,second]
 
-    print("FIRST = ",first.genotype, " , SECOND = ",second.genotype)
-
-    #crossover ([New Variations of Order Crossover for Travelling Salesman Problem, O_X1])
+def crossOver(first,second):
+    #crossover ([New Variations of Order Crossover for Travelling Salesman Problem, O_X1]
+    # ,[A comparative study of Adaptive Crossover Operator])
     [first_point,second_point] = sample(range(1, nA+nB), 2)
 
     first_point = 2
     second_point = 5
-    print("P1 = ",first_point, ", P2 = ",second_point)
 
-    first_child = Individual()
-    second_child = Individual()
+    child = Individual()
 
-    first_child_scheduled = [False]*(nA+nB)
-    second_child_scheduled = [False]*(nA+nB)
+    child_scheduled = [False]*(nA+nB)
 
+    #copy element from point1 to point2
     for j in range (min(first_point,second_point), max(first_point,second_point)):
-        first_child.genotype[j] = first.genotype[j]
-        first_child_scheduled[first.genotype[j]] = True
-
-        second_child.genotype[j] = second.genotype[j]
-        second_child_scheduled[second.genotype[j]] = True
-    print("FIRST CHILD = ",first_child.genotype,",  SECOND CHILD = ",second_child.genotype)
+        child.genotype[j] = first.genotype[j]
+        child_scheduled[first.genotype[j]] = True
         
     index1 = 0
-    index2 = 0
 
-    for j in range(0,nA+nB-max(first_point,second_point)+min(first_point,second_point)):
-        print(first.genotype[(max(first_point,second_point)+j)%(nA+nB)])
-        if(not second_child_scheduled[first.genotype[(max(first_point,second_point)+j)%(nA+nB)]]):
-            second_child_scheduled[first.genotype[(max(first_point,second_point)+j)%(nA+nB)]] = True
-            second_child.genotype[(max(first_point,second_point)+index2)%(nA+nB)] = first.genotype[(max(first_point,second_point)+j)%(nA+nB)]
-            index2 = index2 + 1
-       
-        if(not first_child_scheduled[second.genotype[(max(first_point,second_point)+j)%(nA+nB)]]):
-            first_child_scheduled[second.genotype[(max(first_point,second_point)+j)%(nA+nB)]] = True
-            first_child.genotype[(max(first_point,second_point)+index1)%(nA+nB)] = second.genotype[(max(first_point,second_point)+j)%(nA+nB)]
+    #scan remaining element from point2 to point1 and eventually insert
+    for j in range(0,nA+nB):
+        if(not child_scheduled[second.genotype[(max(first_point,second_point)+j)%(nA+nB)]]):
+            child_scheduled[second.genotype[(max(first_point,second_point)+j)%(nA+nB)]] = True
+            child.genotype[(max(first_point,second_point)+index1)%(nA+nB)] = second.genotype[(max(first_point,second_point)+j)%(nA+nB)]
             index1 = index1 + 1
-
-    print("FIRST CHILD = ",first_child.genotype,",  SECOND CHILD = ",second_child.genotype)
-
-    print(first_child_scheduled)
-    for j in range (min(first_point,second_point), max(first_point,second_point)):
-        print(second.genotype[j])
-        if(not first_child_scheduled[second.genotype[j]]):
-            first_child.genotype[(max(first_point,second_point)+index1)%(nA+nB)] = second.genotype[j]
-            index1 = index1+1
         
-        if(not second_child_scheduled[first.genotype[j]]):  
-            second_child.genotype[(max(first_point,second_point)+index2)%(nA+nB)] = first.genotype[j]
-            index2 = index2+1
+        if(index1 == nA+nB+min(first_point,second_point) - max(first_point,second_point)):
+            break
 
-    print("FIRST CHILD = ",first_child.genotype,",  SECOND CHILD = ",second_child.genotype)
+    return child
+
+def initPopulation():
+    global UB, totalInverseFitness, best, optimum
+
+    #init population
+    totalInverseFitness = 0
+    UB = pwSum
+    best = Individual()
+    optimum = False
 
 
-    #mutation
-    #postoptimization
-    #replace worst solution with this new one
+    #inizializzare random alternando pero nA e nB invece di farlo completamente random
+    value1_n = list(range(0,nA+nB))
+    shuffle(value1_n)
+    individual = Individual(value1_n)
+    evaluateFitness(individual)
+    population.append(individual)
+
+    #update UB
+    if individual.objF <= UB:
+        UB = individual.objF
+        best = individual
+        if individual.objF <=0:
+            optimum = True
+            return
+    
+    totalInverseFitness = totalInverseFitness + individual.fitness
+
+def initParam():
+    global sizePopulation, numIteration, population, crossoverProb,mutationProb,pwSum,nA,nB,p,w
+    seed(1)
+
+    sizePopulation = 100
+    numIteration = 20
+    population = []
+    crossoverProb = 0.8
+    mutationProb = 0.2
+
+    nA = 100
+    nB = 100
+    p = []
+    w = []
+
+    pwSum = 0
+    #init p and w
+    for i in range(nA+nB):
+        p.append(randint(1,1000))
+        w.append(randint(1,1000))
+        pwSum = pwSum + p[i]*w[i]
+    #end init p and w
+
+
+
+    #end init param
+
+
+from random import seed
+from random import randint
+from random import uniform
+from random import shuffle
+from random import sample
+from random import choice
+import time
+import copy
+import random as r
+
+initParam()
+
+start = time.time()
+
+for i in range (sizePopulation):
+    initPopulation()
+    
+newInverseFitness = 0  
+
+for i in range(numIteration):
+
+    population_next = []
+      
+    for j in range(sizePopulation):
+        [first,second] = rouletteWheel()
+
+        if(uniform(0,1)<=crossoverProb):
+            child = crossOver(first,second)
+        else:
+            child = first
+
+        #print("After cross, child = ",child.genotype)
+
+        #inverse mutation [A comparative study]
+        if(uniform(0,1) <= mutationProb):
+            inverseMutation(child)
+        #end mutation
+
+        #print("After mutation, child = ",child.genotype)
+
+        #compute objfunction
+        evaluateFitness(child)
+
+        #postoptimization two opt
+        postOptimize(child)
+        
+        population_next.append(child)
+
+        newInverseFitness = newInverseFitness + child.fitness
+
+        if(child.objF <= UB):
+            UB = child.objF
+            indexBestChildren = j
+
+            if(child.objF <=0):
+                best = child
+                optimum = True
+                break
+
+    if optimum:
+        break
+
+    #choose which individual to delete in order to insert the previous best
+    toRemove = choice(list(range(indexBestChildren))+list(range(indexBestChildren+1,sizePopulation)))
+    
+    newInverseFitness = newInverseFitness - population_next[toRemove].fitness
+    newInverseFitness = newInverseFitness + best.fitness
+    totalInverseFitness = newInverseFitness
+    newInverseFitness = 0
+   
+    population_next[toRemove] = best
+    population = population_next
+    
+    if(population_next[indexBestChildren].objF<best.objF):
+        best = population_next[indexBestChildren]
+
+print(i," ",UB)
+print("TIME",time.time()-start)
+print(best.genotype)
 
 
