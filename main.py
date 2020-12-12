@@ -61,6 +61,7 @@ def postOptimize(individual):
                 setattr(individual,"sumB",newSumB)
 
 def evaluateFitness(individual):
+    global optimum, best
     cumulativeTime = 0
     sumA = 0
     sumB = 0
@@ -73,9 +74,13 @@ def evaluateFitness(individual):
             sumA = sumA + cumulativeTime*w[individual.genotype[j]]
         else:
             sumB = sumB + cumulativeTime*w[individual.genotype[j]]
-
-    setattr(individual,"fitness",1/abs(sumA/nA-sumB/nB))
+    
     setattr(individual,"objF",abs(sumA/nA-sumB/nB))
+    if(abs(sumA/nA-sumB/nB)<=0):
+        optimum = True
+        best = individual
+        return
+    setattr(individual,"fitness",1/abs(sumA/nA-sumB/nB))
     setattr(individual,"sumA",sumA)
     setattr(individual,"sumB",sumB)
 
@@ -106,9 +111,6 @@ def crossOver(first,second):
     #crossover ([New Variations of Order Crossover for Travelling Salesman Problem, O_X1]
     # ,[A comparative study of Adaptive Crossover Operator])
     [first_point,second_point] = sample(range(1, nA+nB), 2)
-
-    first_point = 2
-    second_point = 5
 
     child = Individual()
 
@@ -164,22 +166,22 @@ def initParam():
     global sizePopulation, numIteration, population, crossoverProb,mutationProb,pwSum,nA,nB,p,w
     seed(1)
 
-    sizePopulation = 100
-    numIteration = 20
+    sizePopulation = 20
+    numIteration = 100
     population = []
     crossoverProb = 0.8
     mutationProb = 0.2
 
-    nA = 100
-    nB = 100
+    nA = 6
+    nB = 6
     p = []
     w = []
 
     pwSum = 0
     #init p and w
     for i in range(nA+nB):
-        p.append(randint(1,1000))
-        w.append(randint(1,1000))
+        p.append(randint(1,1))
+        w.append(randint(1,1))
         pwSum = pwSum + p[i]*w[i]
     #end init p and w
 
@@ -203,7 +205,7 @@ initParam()
 start = time.time()
 
 for i in range (sizePopulation):
-    initPopulation()
+    initPopulation() #(2) random - alternando uno di Ja e uno di Jb 
     
 newInverseFitness = 0  
 
@@ -212,10 +214,9 @@ for i in range(numIteration):
     population_next = []
       
     for j in range(sizePopulation):
-        [first,second] = rouletteWheel()
-
+        [first,second] = rouletteWheel() #(3) roulette-binary tournment-ktournment 
         if(uniform(0,1)<=crossoverProb):
-            child = crossOver(first,second)
+            child = crossOver(first,second) #(5) onepoint - twopoint ver1 - twopoint ver2 - position based ver1 - extraggo k random e prendo i primi k di 1 poi k dell'altro controllando se non ci sono gia (ex 1,2,3,4,5,6 e 3,2,4,1,3,5,6 e  k = 2 diventa 1,2,4,3,5,6)
         else:
             child = first
 
@@ -223,7 +224,7 @@ for i in range(numIteration):
 
         #inverse mutation [A comparative study]
         if(uniform(0,1) <= mutationProb):
-            inverseMutation(child)
+            inverseMutation(child) #(6-7)inverse mutation (tsp), adjacent two job, arbitrary two job, arbuitrary three job, shift change, "ARBITRARY LOT EXCHANGE (k job adiacenti e k altri job adiacenti e scambiamo)", "ADJACENT LOT EXCHANGE"
         #end mutation
 
         #print("After mutation, child = ",child.genotype)
