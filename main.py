@@ -9,9 +9,10 @@ class Individual:
         else:
             self.genotype = [0]*(nA+nB)
    
+#MUTATION OPERATORS
 def inverseMutation(individual):
     [first_point,second_point] = sample(range(0, nA+nB), 2)
-    for j in range((max(first_point,second_point)-min(first_point,second_point))//2+1):
+    for j in range((abs(first_point-second_point))//2+1):
         swap = individual.genotype[max(first_point,second_point)-j]
         individual.genotype[max(first_point,second_point)-j] = individual.genotype[min(first_point,second_point)+j]
         individual.genotype[min(first_point,second_point)+j] = swap
@@ -22,7 +23,58 @@ def adjacentTwo_JobChange(individual):
     swap = individual.genotype[point]
     individual.genotype[point] = individual.genotype[point+1]
     individual.genotype[point+1] = swap
-    return individual
+
+def arbitraryTwo_JobChange(individual):
+    [first,second] = sample(range(0, nA+nB), 2)
+    swap = individual.genotype[first]
+    individual.genotype[first] = individual.genotype[second]
+    individual.genotype[second] = swap
+
+def arbitraryThree_JobChange(individual):
+    [first,second,third] = sample(range(0, nA+nB), 3)
+    swap = individual.genotype[third]
+    individual.genotype[third] = individual.genotype[second]
+    individual.genotype[second] = individual.genotype[first]
+    individual.genotype[first] = swap
+
+def shift(individual):
+    [first,second] = sample(range(0, nA+nB), 2)
+    
+    [first,second] = [7,0]
+
+    #put element in second position in position first
+    if(second>first):
+        element = individual.genotype[second]
+        for i in range(second,first,-1):
+            individual.genotype[i] = individual.genotype[i-1]
+        individual.genotype[first] = element
+    else:
+        element = individual.genotype[second]
+        for i in range(second,first):
+            individual.genotype[i] = individual.genotype[i+1]
+        individual.genotype[first] = element
+
+def adjacentLotExchange(individual):
+    first = randint(0,nA+nB-2)
+    lotSize = randint(1,(nA+nB-first)//2)
+    print("First",first)
+    print("lot size between",1," and ",(nA+nB-first)//2)
+    for i in range(lotSize):
+        swap = individual.genotype[first+i]
+        individual.genotype[first+i] = individual.genotype[first+lotSize+i]
+        individual.genotype[first+lotSize+i] = swap
+
+def arbitraryLotExchange(individual):
+    [first,second] = sample(range(0, nA+nB), 2)
+    print("first",first," second",second)
+    lotSize = randint(1,min(abs(first-second),nA+nB-max(first,second)))
+    print("lot size",lotSize)
+    for i in range(lotSize):
+        swap = individual.genotype[first+i]
+        individual.genotype[first+i] = individual.genotype[second+i]
+        individual.genotype[second+i] = swap
+
+#END MUTATION OPERATORS
 
 def postOptimize(individual):
     global optimum,best
@@ -115,10 +167,42 @@ def rouletteWheel():
 
     return [first,second]
 
+#CROSSOVER OPERATORS
+#(1-4 presi da MURATA et al)
+#5 inventato da me
+def onePointCrossover(first,second):
+    child = Individual()
+    child_scheduled = [False]*(nA+nB)
+    
+    point = randint(1,nA+nB-1)
+    #print("FIRST",first.genotype," SECODND",second.genotype)
+    #print("POINT ",point)
+    if uniform(0,1)<=0.5:
+       # print("LEFT")
+        start = 0
+        end = point
+        index = point
+    else:
+       # print("RIGHT")
+        start = point
+        end = nA+nB
+        index = 0
+
+    for i in range(start,end):
+            child.genotype[i] = first.genotype[i]
+            child_scheduled[first.genotype[i]] = True
+
+    for i in range(nA+nB):
+        if not child_scheduled[second.genotype[i]]:
+            child.genotype[index] = second.genotype[i]
+            index = index + 1
+            if index == start or index == nA+nB:
+                break
+    return child
+
 def twoPointCrossoverVerI(first,second):
     [first_point,second_point] = sample(range(1, nA+nB), 2)
-    first_point = 2
-    second_point = 6
+   
     child = Individual()
     child_scheduled = [False]*(nA+nB)
 
@@ -171,36 +255,6 @@ def twoPointCrossoverVerII(first,second):
 
     return child
 
-def onePointCrossover(first,second):
-    child = Individual()
-    child_scheduled = [False]*(nA+nB)
-    
-    point = randint(1,nA+nB-1)
-    #print("FIRST",first.genotype," SECODND",second.genotype)
-    #print("POINT ",point)
-    if uniform(0,1)<=0.5:
-       # print("LEFT")
-        start = 0
-        end = point
-        index = point
-    else:
-       # print("RIGHT")
-        start = point
-        end = nA+nB
-        index = 0
-
-    for i in range(start,end):
-            child.genotype[i] = first.genotype[i]
-            child_scheduled[first.genotype[i]] = True
-
-    for i in range(nA+nB):
-        if not child_scheduled[second.genotype[i]]:
-            child.genotype[index] = second.genotype[i]
-            index = index + 1
-            if index == start or index == nA+nB:
-                break
-    return child
-
 def positionBasedCrossover(first, second):
     child = Individual()
     child_scheduled = [False]*(nA+nB)    
@@ -211,7 +265,8 @@ def positionBasedCrossover(first, second):
     positions = sample(range(0, nA+nB), numPos)
 
     numPos = 4
-    positions = [1,2,4,7]    
+    positions = [1,2,4,7]   
+
     for j in range (numPos):
         child.genotype[positions[j]] = first.genotype[positions[j]]
         child_scheduled[first.genotype[positions[j]]] = True
@@ -232,6 +287,49 @@ def positionBasedCrossover(first, second):
 
     return child        
     
+def kStepSizeBasedCrossover(first, second):
+    child = Individual()
+    child_scheduled = [False]*(nA+nB)
+
+    stepSize = randint(1,nA+nB-2) #se faccio nA+nB-1 mi rimane solo l'ultima posizione quindi ovviamente ci andrà l'elemento mancantes
+
+    index1 = 0
+    indexPar1 = 0
+    indexPar2 = 0
+    completed = False
+    while(not completed):
+        for i in range(stepSize):
+            avoidOutOfRange1 = min(nA+nB-1,indexPar1+i)
+            if(not child_scheduled[first.genotype[avoidOutOfRange1]]):
+                child.genotype[index1] = first.genotype[avoidOutOfRange1]
+                child_scheduled[first.genotype[avoidOutOfRange1]] = True
+                index1 = index1 + 1
+                #print("insert",child.genotype[index1-1])
+
+                if(index1 == nA + nB):
+                    completed = True
+                    break
+
+        if(completed):
+            break
+
+        for i in range(stepSize):
+            avoidOutOfRange2 = min(nA+nB-1,indexPar2+i)
+            if(not child_scheduled[second.genotype[avoidOutOfRange2]]):
+                child.genotype[index1] = second.genotype[avoidOutOfRange2]
+                child_scheduled[second.genotype[avoidOutOfRange2]] = True
+                index1 = index1 + 1
+                #print("insert",child.genotype[index1-1])
+                if(index1 == nA + nB):
+                    completed = True
+                    break
+
+        indexPar1 = indexPar1 + stepSize    
+        indexPar2 = indexPar2 + stepSize
+    return child
+
+#END CROSSOVER OPERATORS
+
 def initPopulation():
     global UB, totalInverseFitness, best, optimum
 
@@ -326,19 +424,21 @@ if __name__ == "__main__":
                     population_next = []
                     
                     for j in range(sizePopulation):
-                        [first,second] = rouletteWheel() #(3) roulette-binary tournment-ktournment 
+                        [first,second] = rouletteWheel() #(3)binary tournment-ktournment 
                         
-                        
+                        '''
                         nA = 4
                         nB = 4
                         first.genotype = [0,1,2,3,4,5,6,7]
                         second.genotype = [4,7,0,3,1,2,6,5]
-
-                        if(uniform(0,1)<=1):
+                        '''
+                        
+                        if(uniform(0,1)<=crossoverProb):
                             #child = onePointCrossover(first,second)
                             #child = twoPointCrossoverVerI(first,second)
-                            #child = twoPointCrossoverVerII(first,second) #(5)  position based ver1 - extraggo k random e prendo i primi k di 1 poi k dell'altro controllando se non ci sono gia (ex 1,2,3,4,5,6 e 3,2,4,1,3,5,6 e  k = 2 diventa 1,2,4,3,5,6)
-                            child = positionBasedCrossover(first,second)
+                            #child = twoPointCrossoverVerII(first,second) #(5)  estraggo k random e prendo i primi k di 1 poi k dell'altro controllando se non ci sono gia (ex 1,2,3,4,5,6 e 3,2,4,1,3,5,6 e  k = 2 diventa 1,2,4,3,5,6)
+                            #child = positionBasedCrossover(first,second)
+                            child = kStepSizeBasedCrossover(first,second)
                         else:
                             child = first
                         print("After cross, child = ",child.genotype)
@@ -346,10 +446,15 @@ if __name__ == "__main__":
                         #inverse mutation [A comparative study]
                         
                         if(uniform(0,1) <= mutationProb):
-                            #inverseMutation(child) #(6-7)inverse mutation (tsp), adjacent two job, arbitrary two job, arbuitrary three job, shift change, "ARBITRARY LOT EXCHANGE (k job adiacenti e k altri job adiacenti e scambiamo)", "ADJACENT LOT EXCHANGE"
-                            adjacentTwo_JobChange(child)
+                            #inverseMutation(child) #(6-7) "ARBITRARY LOT EXCHANGE (k job adiacenti e k altri job adiacenti e scambiamo)", "ADJACENT LOT EXCHANGE"
+                            #adjacentTwo_JobChange(child)
+                            #arbitraryTwo_JobChange(child)
+                            #arbitraryThree_JobChange(child)
+                            #shift(child)
+                            #arbitraryLotExchange(child)
+                            adjacentLotExchange(child)
                         #end mutation
-                        
+                        print("after mutation, child =",child.genotype) 
                         #print("After mutation, child = ",child.genotype)
 
                         #compute objfunction
@@ -380,8 +485,13 @@ if __name__ == "__main__":
                     if optimum:
                         break
 
+                    try:
+                        toRemove = choice(list(range(indexBestChildren))+list(range(indexBestChildren+1,sizePopulation)))
+                    except NameError:
+                        indexBestChildren = 0
+                        toRemove = randint(0,sizePopulation)
+                        
                     #choose which individual to delete in order to insert the previous best
-                    toRemove = choice(list(range(indexBestChildren))+list(range(indexBestChildren+1,sizePopulation)))
                     
                     newInverseFitness = newInverseFitness - population_next[toRemove].fitness
                     newInverseFitness = newInverseFitness + best.fitness
