@@ -8,18 +8,13 @@ class Individual:
             self.sumB = sumB
         else:
             self.genotype = [0]*(nA+nB)
-   
+
+#################
+
 #MUTATION OPERATORS
-def inverseMutation(individual):
-    [first_point,second_point] = sample(range(0, nA+nB), 2)
-    for j in range((abs(first_point-second_point))//2+1):
-        swap = individual.genotype[max(first_point,second_point)-j]
-        individual.genotype[max(first_point,second_point)-j] = individual.genotype[min(first_point,second_point)+j]
-        individual.genotype[min(first_point,second_point)+j] = swap
 
 def adjacentTwo_JobChange(individual):
     point = randint(0,nA+nB-2)
-    #print("POINT",point)
     swap = individual.genotype[point]
     individual.genotype[point] = individual.genotype[point+1]
     individual.genotype[point+1] = swap
@@ -39,8 +34,6 @@ def arbitraryThree_JobChange(individual):
 
 def shift(individual):
     [first,second] = sample(range(0, nA+nB), 2)
-    
-    [first,second] = [7,0]
 
     #put element in second position in position first
     if(second>first):
@@ -54,27 +47,25 @@ def shift(individual):
             individual.genotype[i] = individual.genotype[i+1]
         individual.genotype[first] = element
 
-def adjacentLotExchange(individual):
+def adjacentBatchExchange(individual):
     first = randint(0,nA+nB-2)
     lotSize = randint(1,(nA+nB-first)//2)
-    print("First",first)
-    print("lot size between",1," and ",(nA+nB-first)//2)
     for i in range(lotSize):
         swap = individual.genotype[first+i]
         individual.genotype[first+i] = individual.genotype[first+lotSize+i]
         individual.genotype[first+lotSize+i] = swap
 
-def arbitraryLotExchange(individual):
+def arbitraryBatchExchange(individual):
     [first,second] = sample(range(0, nA+nB), 2)
-    print("first",first," second",second)
     lotSize = randint(1,min(abs(first-second),nA+nB-max(first,second)))
-    print("lot size",lotSize)
     for i in range(lotSize):
         swap = individual.genotype[first+i]
         individual.genotype[first+i] = individual.genotype[second+i]
         individual.genotype[second+i] = swap
 
-#END MUTATION OPERATORS
+#################
+
+#LOCAL SEARCH AND EVALUATION
 
 def postOptimize(individual):
     global optimum,best
@@ -145,8 +136,10 @@ def evaluateFitness(individual):
     setattr(individual,"sumA",sumA)
     setattr(individual,"sumB",sumB)
 
+#################
+
+#SELECTION OPERATORS
 def rouletteWheel():
-    #select using roulette wheel
     random1 = uniform(0,totalInverseFitness)
     random2 = uniform(0,totalInverseFitness)
     cumulative = 0
@@ -155,35 +148,56 @@ def rouletteWheel():
 
     for j in range(sizePopulation):
         if cumulative<random1 and random1<cumulative+population[j].fitness and not found1:
-            first = copy.deepcopy(population[j])
+            first = population[j]
             found1 = True
         if cumulative<random2 and random2<cumulative+population[j].fitness and not found2:
-            second = copy.deepcopy(population[j])
+            second = population[j]
             found2 = True
         cumulative = cumulative + population[j].fitness
         if(found1 and found2):
             break
-    #end selection using roulette wheel
 
     return [first,second]
 
+def tournment(k):
+    group1 = []
+    group2 = []
+    for i in range(k):
+        group1.append(population[randint(0,sizePopulation-1)])
+        group2.append(population[randint(0,sizePopulation-1)])
+   
+    win1 = group1[0]
+    obj1 = group1[0].objF
+    
+    win2 = group2[0]
+    obj2 = group2[0].objF
+
+    for i in range(1,k):
+        if group1[i].objF<obj1:
+            obj1 = group1[i].objF
+            win1 = group1[i]
+
+        if group2[i].objF<obj2:
+            obj2 = group2[i].objF
+            win2 = group2[i]
+        
+    return [win1,win2]
+
+#################
+
 #CROSSOVER OPERATORS
-#(1-4 presi da MURATA et al)
-#5 inventato da me
+
 def onePointCrossover(first,second):
     child = Individual()
     child_scheduled = [False]*(nA+nB)
     
     point = randint(1,nA+nB-1)
-    #print("FIRST",first.genotype," SECODND",second.genotype)
-    #print("POINT ",point)
+    
     if uniform(0,1)<=0.5:
-       # print("LEFT")
         start = 0
         end = point
         index = point
     else:
-       # print("RIGHT")
         start = point
         end = nA+nB
         index = 0
@@ -264,9 +278,6 @@ def positionBasedCrossover(first, second):
 
     positions = sample(range(0, nA+nB), numPos)
 
-    numPos = 4
-    positions = [1,2,4,7]   
-
     for j in range (numPos):
         child.genotype[positions[j]] = first.genotype[positions[j]]
         child_scheduled[first.genotype[positions[j]]] = True
@@ -304,7 +315,6 @@ def kStepSizeBasedCrossover(first, second):
                 child.genotype[index1] = first.genotype[avoidOutOfRange1]
                 child_scheduled[first.genotype[avoidOutOfRange1]] = True
                 index1 = index1 + 1
-                #print("insert",child.genotype[index1-1])
 
                 if(index1 == nA + nB):
                     completed = True
@@ -319,7 +329,6 @@ def kStepSizeBasedCrossover(first, second):
                 child.genotype[index1] = second.genotype[avoidOutOfRange2]
                 child_scheduled[second.genotype[avoidOutOfRange2]] = True
                 index1 = index1 + 1
-                #print("insert",child.genotype[index1-1])
                 if(index1 == nA + nB):
                     completed = True
                     break
@@ -328,10 +337,11 @@ def kStepSizeBasedCrossover(first, second):
         indexPar2 = indexPar2 + stepSize
     return child
 
-#END CROSSOVER OPERATORS
+#################
 
-def initPopulation():
-    global UB, totalInverseFitness, best, optimum
+#INIT OPERATORS
+def initPopulationRandom():
+    global UB, totalInverseFitness, best, optimum, sizePopulation
 
     #init population
     totalInverseFitness = 0
@@ -339,23 +349,71 @@ def initPopulation():
     best = Individual()
     optimum = False
 
+    for i in range (sizePopulation):
+        value1_n = list(range(0,nA+nB))
+        shuffle(value1_n)
+        individual = Individual(value1_n)
+        evaluateFitness(individual)
+        population.append(individual)
 
-    #inizializzare random alternando pero nA e nB invece di farlo completamente random
-    value1_n = list(range(0,nA+nB))
-    shuffle(value1_n)
-    individual = Individual(value1_n)
-    evaluateFitness(individual)
-    population.append(individual)
+        #update UB
+        if individual.objF <= UB:
+            UB = individual.objF
+            best = individual
+            if individual.objF <=0:
+                optimum = True
+                return
+        
+        totalInverseFitness = totalInverseFitness + individual.fitness
 
-    #update UB
-    if individual.objF <= UB:
-        UB = individual.objF
-        best = individual
-        if individual.objF <=0:
-            optimum = True
-            return
+def initPopulationAlternating():
+    global UB, totalInverseFitness, best, optimum, sizePopulation
+
+    #init population
+    totalInverseFitness = 0
+    UB = pwSum
+    best = Individual()
+    optimum = False
     
-    totalInverseFitness = totalInverseFitness + individual.fitness
+    for i in range (sizePopulation):
+        value_1_nA = list(range(0,nA))
+        value_nA_n = list(range(nA,nA+nB))
+
+        shuffle(value_1_nA)
+        shuffle(value_nA_n)
+
+        individual = Individual()
+
+        index1 = 0
+        index2 = 0
+        for i in range (nA+nB):
+            if(i%2==0):
+                if(index1 < nA):
+                    individual.genotype[i] = value_1_nA[index1]
+                    index1 = index1 + 1
+                else:
+                    individual.genotype[i] = value_nA_n[index2]
+                    index2 = index2 +1
+            else:
+                if(index2 < nB):
+                    individual.genotype[i] = value_nA_n[index2]
+                    index2 = index2 +1
+                else:
+                    individual.genotype[i] = value_1_nA[index1]
+                    index1 = index1 + 1
+
+        evaluateFitness(individual)
+        population.append(individual)
+
+        #update UB
+        if individual.objF <= UB:
+            UB = individual.objF
+            best = individual
+            if individual.objF <=0:
+                optimum = True
+                return
+        
+        totalInverseFitness = totalInverseFitness + individual.fitness
 
 def initParam():
     global sizePopulation, numIteration, population, crossoverProb,mutationProb,pwSum,nA,nB,p,w
@@ -402,75 +460,79 @@ if __name__ == "__main__":
     import copy
     import random as r
 
-    for nA in range(50,51,50):
-        for nB in range(50,51,50):
-            f = open("Dataset\\BigInterval\\"+str(nA)+"_"+str(nB)+".txt", "r")
+    for nA in range(10,51,50):
+        for nB in range(20,51,50):
+            f = open("Dataset\\"+str(nA)+"_"+str(nB)+".txt", "r")
             res = open("Result\\"+str(nA)+"_"+str(nB)+".txt", "a")
            
             totalTime = 0
+
             for scenario in range (50):
-                initParam()
+                initParam() #initParameter
+                start = time.time() #takeTime
 
-                start = time.time()
+                #####################################################
+                #INIT POPULATION, DECOMMENT THE RIGHT FUNCTION
+                #initPopulationRandom() 
+                initPopulationAlternating()
+                #####################################################
 
-                for i in range (sizePopulation):
-                    initPopulation() #(2) random - alternando uno di Ja e uno di Jb 
-                
                 if(optimum):
                     break
-                newInverseFitness = 0  
 
-                for i in range(numIteration):
+                newInverseFitness = 0 #used to update the total inverse fitness at the end of each iteration
+
+                while(time.time()-start<=1800):
                     population_next = []
                     
                     for j in range(sizePopulation):
-                        [first,second] = rouletteWheel() #(3)binary tournment-ktournment 
+
+                        #####################################################
+                        #SELECT PARENTS, DECOMMENT THE RIGHT FUNCTION
+                        [first,second] = rouletteWheel() 
+                        #[first,second] = tournment(2)
+                        #[first,second] = tournment(randint(1,nA+nB-1))
+                        #####################################################
                         
-                        '''
-                        nA = 4
-                        nB = 4
-                        first.genotype = [0,1,2,3,4,5,6,7]
-                        second.genotype = [4,7,0,3,1,2,6,5]
-                        '''
-                        
+                        #####################################################
+                        #CROSSOVER, DECOMMENT THE RIGHT FUNCTION
                         if(uniform(0,1)<=crossoverProb):
                             #child = onePointCrossover(first,second)
                             #child = twoPointCrossoverVerI(first,second)
-                            #child = twoPointCrossoverVerII(first,second) #(5)  estraggo k random e prendo i primi k di 1 poi k dell'altro controllando se non ci sono gia (ex 1,2,3,4,5,6 e 3,2,4,1,3,5,6 e  k = 2 diventa 1,2,4,3,5,6)
+                            #child = twoPointCrossoverVerII(first,second)
                             #child = positionBasedCrossover(first,second)
                             child = kStepSizeBasedCrossover(first,second)
                         else:
-                            child = first
-                        print("After cross, child = ",child.genotype)
+                            child = Individual()
+                            child.genotype = first.genotype
+                        #####################################################
 
-                        #inverse mutation [A comparative study]
-                        
+                        #####################################################
+                        #MUTATION, DECOMMENT THE RIGHT FUNCTION
                         if(uniform(0,1) <= mutationProb):
-                            #inverseMutation(child) #(6-7) "ARBITRARY LOT EXCHANGE (k job adiacenti e k altri job adiacenti e scambiamo)", "ADJACENT LOT EXCHANGE"
+                            #inverseMutation(child) 
                             #adjacentTwo_JobChange(child)
                             #arbitraryTwo_JobChange(child)
                             #arbitraryThree_JobChange(child)
                             #shift(child)
-                            #arbitraryLotExchange(child)
-                            adjacentLotExchange(child)
-                        #end mutation
-                        print("after mutation, child =",child.genotype) 
-                        #print("After mutation, child = ",child.genotype)
+                            #arbitraryBatchExchange(child)
+                            adjacentBatchExchange(child)
+                        #####################################################
 
-                        #compute objfunction
+                        #####################################################
+                        #COMPUTE OBJECTIVE VALUE AND FITNESS
                         evaluateFitness(child)
-                        
                         if(optimum):
                             break
 
-                        #postoptimization two opt
-                        postOptimize(child)
-                        
+                        postOptimize(child)                        
                         if(optimum):
                             break
+                        #####################################################
 
+                        #####################################################
+                        #APPEND NEW CHILD, UPDATE NEW INVERSE FITNESS, UPDATE UB, UPDATE BEST
                         population_next.append(child)
-
                         newInverseFitness = newInverseFitness + child.fitness
 
                         if(child.objF <= UB):
@@ -481,18 +543,21 @@ if __name__ == "__main__":
                                 best = child
                                 optimum = True
                                 break
+                        #####################################################
 
+                    #END ITERATION    
                     if optimum:
                         break
 
+                    #####################################################
+                    #REMOVE ONLY ONE CHILD OF THE NEW POPULATION TO INSERT THE PREVIOUS BEST (EXCLUDING, IF IT EXISTS, THE NEW BEST)
+                    #UPDATE THE NEW INVERSE FITNESS AND ASSIGN IT TO THE TOTAL INVERSE FITNESS
                     try:
                         toRemove = choice(list(range(indexBestChildren))+list(range(indexBestChildren+1,sizePopulation)))
                     except NameError:
                         indexBestChildren = 0
                         toRemove = randint(0,sizePopulation)
-                        
-                    #choose which individual to delete in order to insert the previous best
-                    
+                                            
                     newInverseFitness = newInverseFitness - population_next[toRemove].fitness
                     newInverseFitness = newInverseFitness + best.fitness
                     totalInverseFitness = newInverseFitness
@@ -503,9 +568,18 @@ if __name__ == "__main__":
                     
                     if(population_next[indexBestChildren].objF<best.objF):
                         best = population_next[indexBestChildren]
-                
+                    #####################################################
+                #END SCENARIO
+
+                #####################################################
+                #UPDATE TOTAL TIME AND WRITE THE RESULT
                 totalTime = totalTime + (time.time()-start)
                 res.write("UB,"+str(time.time()-start)+"\n")
+                #####################################################
+
+            #END SCENARIOS
+            #####################################################
+            #SAVE FINAL AVG RESULTS
             res.write("AVG TIME,"+str(totalTime/50))
 
 
