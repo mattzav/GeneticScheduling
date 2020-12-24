@@ -1,0 +1,13 @@
+init, crossover, mutation and selection sul codice ci sono le varianti da usare
+
+Pensare se applicare local search gia a quelle iniziali (potrebbe venire meno l'algoritmo genetico) ed aumentare
+la size della popolazione dato che non si perde il tempo della prima iter in cui si matchano soluzioni schifosse
+
+crossover
+	0.5,0.6,0.7,0.8,0.9,1
+mutation
+	0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1
+population size
+	n/2 n 2n o forse meglio 5 10 20 30 40 50 indipendente da n
+
+fare esperimenti sui piccoli con tutti poi scegliere la configurazione migliore ed usare quella 
