@@ -247,7 +247,7 @@ In our approach, we tried three different techniques: \textit{Random}, \textit{A
 		\item Let $k = \min\{n_A,n_B\}$. This phase performs $k$ different steps each of which aimed at scheduling one job for both of the two classes; in the step $i$-th, jobs $P(N_A)_i$ and $P(N_B)_i$ are assigned to positions $i$ and $n_A+n_B-i$. Following a greedy approach, from the two possible assignments the one currently minimizing \refe{BAWCT} is chosen.  
 		\item This phase is performed whenever $n_A \ne n_B$. If this is the case, the remaining jobs for one of the two class are accommodated in the middle of the sequence. 
 	\end{enumerate}
-	Note that for each couple of permutations $(P(N_A),P(N_B))$, the generation process outputs a different schedule. This guarantees a \textit{diversification} in the initial population.
+	Note that for each couple of permutations $(P(N_A),P(N_B))$ the generation process outputs a different schedule. This guarantees a \textit{diversification} in the initial population, even if the same greedy procedure is used for generating each individual.
 \end{itemize}
 \subsection{Selection}
 Selection is a crucial step in designing a GA since it defines the chance of a given individual to participate in the reproduction process. Since a convergence to optimal solutions is desired, it's recommended to give an higher chance to individuals with an higher fitness value.\\
