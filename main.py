@@ -460,12 +460,25 @@ def initPopulationBidirectional():
         currentSum = 0
 
         for i in range (min(nA,nB)):
-            if(totalSumA<totalSumB):
+           
+            #insert A before
+            case1SumA = totalSumA + (currentSum + p[value_1_nA[i]])*w[value_1_nA[i]]
+            case1SumB = totalSumB + (totalSum * w[value_nA_n[i]])
+
+            
+            #insert B before
+            case2SumA = totalSumA + (totalSum * w[value_1_nA[i]])
+            case2SumB = totalSumB + (currentSum + p[value_nA_n[i]]) * w[value_nA_n[i]]
+
+
+
+            if(abs(case2SumA/nA-case2SumB/nB)<abs(case1SumA/nA-case1SumB/nB)):
                 individual.genotype[i] = value_nA_n[i]
                 individual.genotype[nA+nB-1-i] = value_1_nA[i]
 
-                totalSumB = (currentSum+p[value_nA_n[i]])*w[value_nA_n[i]]
-                totalSumA = totalSum*w[value_1_nA[i]]
+                #insert B before
+                totalSumA = case2SumA
+                totalSumB = case2SumB
 
                 currentSum = currentSum + p[value_nA_n[i]]
                 totalSum = totalSum - p[value_1_nA[i]]
@@ -473,8 +486,9 @@ def initPopulationBidirectional():
                 individual.genotype[i] = value_1_nA[i]
                 individual.genotype[nA+nB-1-i] = value_nA_n[i]
 
-                totalSumA = (currentSum+p[value_1_nA[i]])*w[value_1_nA[i]]
-                totalSumB = totalSum*w[value_nA_n[i]]
+                #insert A before
+                totalSumA = case1SumA
+                totalSumB = case1SumB
 
                 currentSum = currentSum + p[value_1_nA[i]]
                 totalSum = totalSum - p[value_nA_n[i]]
@@ -482,11 +496,16 @@ def initPopulationBidirectional():
         for i in range(min(nA,nB),max(nA,nB)):
             if(nA<nB):
                 individual.genotype[i] = value_nA_n[i]
+                totalSumB = totalSumB + (currentSum+p[value_nA_n[i]])*w[value_nA_n[i]]
+                currentSum = currentSum + p[value_nA_n[i]]
             else:
                 individual.genotype[i] = value_1_nA[i]
+                totalSumA = totalSumA + (currentSum+p[value_1_nA[i]])*w[value_1_nA[i]]
+                currentSum = currentSum + p[value_1_nA[i]]
 
-        evaluateFitness(individual)
 
+        setattr(individual,"objF",abs(totalSumA/nA-totalSumB/nB))
+       
         #update UB
         if individual.objF <= UB:
             UB = individual.objF
@@ -495,6 +514,10 @@ def initPopulationBidirectional():
                 optimum = True
                 return
                 
+        setattr(individual,"fitness",1/abs(totalSumA/nA-totalSumB/nB))
+        setattr(individual,"sumA",totalSumA)
+        setattr(individual,"sumB",totalSumB)
+
         postOptimize(individual)
 
         population.append(individual)
@@ -555,165 +578,172 @@ if __name__ == "__main__":
     import random as r
 
     populationValue = [10,20,50,100]
+    initMethod = ["Random","Alt","Bi-dir"]
+    crossMethod = ["1P","2Pv1","2Pv2","Pos","kStepSize"]
+    selMethod = ["Roul","2-tour","k-tour"]
+    mutMethod = ["adj2","arb2","arb3","shift","arbBat","adjBat"]
+
     seed(1)
 
     for populationSizeIndex in range(4):
-        for mutationIndex in range(4,11):
-            for crossIndex in range(5):
-                res = open("Result\\"+str(populationValue[populationSizeIndex])+" "+str(1-mutationIndex/10)+" "+str(1-crossIndex/10)+".txt", "a")
-                for nA in range(50,251,50):
-                    for nB in range(nA,min(251,nA+51),50):
-                        f = open("Dataset\\"+str(nA)+"_"+str(nB)+".txt", "r")
-                        sizePopulation = populationValue[populationSizeIndex]
-                        mutationProb = 1- mutationIndex/10
-                        crossoverProb = 1-crossIndex/10
-                        totalTime = 0
-                        totalObjVal = 0
-                        print(nA,"_",nB )
+        for mutationIndex in range(0,7,2):
+            for crossIndex in range(4,11,2):
+                for crossoverMethodParam in range(3,4):
+                    for selectionMethodParam in range(1,2):
+                        for mutationMethodParam in range(4,5):
+                            for initMethodParam in range(0,3):
+                                res = open("Result\\new\\"+str(populationValue[populationSizeIndex])+" "+str(1-mutationIndex/10)+" "+str(1-crossIndex/10)+" "+initMethod[initMethodParam]+" "+selMethod[selectionMethodParam]+" "+crossMethod[crossoverMethodParam]+" "+mutMethod[mutationMethodParam]+".txt", "a")
+                                for nA in range(50,151,50):
+                                    for nB in range(nA,min(251,nA+51),50):
+                                        f = open("Dataset\\"+str(nA)+"_"+str(nB)+".txt", "r")
+                                        sizePopulation = populationValue[populationSizeIndex]
+                                        mutationProb = 1 - mutationIndex/10
+                                        crossoverProb = 1 - crossIndex/10
+                                        totalTime = 0
+                                        totalObjVal = 0
+                                        print(nA,"_",nB )
 
-                        ##to delete
-                        
-                        initMethodParam = 0
-                        selectionMethodParam = 0
-                        crossoverMethodParam = 3
-                        mutationMethodParam = 4
-                        
+                                        ##to delete
+                                        
+                                        
 
-                        for scenario in range (50):
-                            print(scenario)
-                            initParam() #initParameter
-                            start = time.time() #takeTime
+                                        for scenario in range (10):
+                                            initParam() #initParameter
+                                            start = time.time() #takeTime
 
 
-                            post = {}
+                                            post = {}
 
-                            #####################################################
-                            #INIT POPULATION, DECOMMENT THE RIGHT FUNCTION
-                            if (initMethodParam == 0):
-                                initPopulationRandom()
-                            else: 
-                                initPopulationAlternating()
-                            #####################################################
+                                            #####################################################
+                                            #INIT POPULATION, DECOMMENT THE RIGHT FUNCTION
+                                            if (initMethodParam == 0):
+                                                initPopulationRandom()
+                                            elif(initMethodParam == 1): 
+                                                initPopulationAlternating()
+                                            else:
+                                                initPopulationBidirectional()
+                                            #####################################################
 
-                            newInverseFitness = 0 #used to update the total inverse fitness at the end of each iteration
-                            iter = 0 
-                            while(time.time()-start<=1800):
-                                if(optimum):
-                                    break
-                                iter = iter +1
 
-                                population_next = []
-                                
-                                for j in range(sizePopulation):
+                                            newInverseFitness = 0 #used to update the total inverse fitness at the end of each iteration
+                                            iter = 0 
+                                            while(time.time()-start<=1800):
+                                                if(optimum):
+                                                    break
+                                                iter = iter +1
 
-                                    #####################################################
-                                    #SELECT PARENTS, DECOMMENT THE RIGHT FUNCTION
-                                    if (selectionMethodParam == 0):
-                                        [first,second] = rouletteWheel()
-                                    elif (selectionMethodParam == 1):
-                                        [first,second] = tournment(2)
-                                    elif(selectionMethodParam == 2):
-                                        [first,second] = tournment(randint(1,nA+nB-1))
-                                    #####################################################
-                                    
-                                    #####################################################
-                                    #CROSSOVER, DECOMMENT THE RIGHT FUNCTION
-                                    if(uniform(0,1)<=crossoverProb):
-                                        if(crossoverMethodParam == 0):
-                                            child = onePointCrossover(first,second)
-                                        elif(crossoverMethodParam == 1):
-                                            child = twoPointCrossoverVerI(first,second)
-                                        elif(crossoverMethodParam == 2):
-                                            child = twoPointCrossoverVerII(first,second)
-                                        elif(crossoverMethodParam == 3):
-                                            child = positionBasedCrossover(first,second)
-                                        elif(crossoverMethodParam == 4):
-                                            child = kStepSizeBasedCrossover(first,second)
-                                    else:
-                                        child = Individual()
-                                        child.genotype = first.genotype
-                                    #####################################################
+                                                population_next = []
+                                                
+                                                for j in range(sizePopulation):
 
-                                    #####################################################
-                                    #MUTATION, DECOMMENT THE RIGHT FUNCTION
-                                    if(uniform(0,1) <= mutationProb):
-                                        if(mutationMethodParam==0):
-                                            adjacentTwo_JobChange(child)
-                                        elif(mutationMethodParam==1):
-                                            arbitraryTwo_JobChange(child)
-                                        elif(mutationMethodParam==2):
-                                            arbitraryThree_JobChange(child)
-                                        elif(mutationMethodParam==3):
-                                            shift(child)
-                                        elif(mutationMethodParam==4):
-                                            arbitraryBatchExchange(child)
-                                        elif(mutationMethodParam==5):
-                                            adjacentBatchExchange(child)
-                                    #####################################################
+                                                    #####################################################
+                                                    #SELECT PARENTS, DECOMMENT THE RIGHT FUNCTION
+                                                    if (selectionMethodParam == 0):
+                                                        [first,second] = rouletteWheel()
+                                                    elif (selectionMethodParam == 1):
+                                                        [first,second] = tournment(2)
+                                                    elif(selectionMethodParam == 2):
+                                                        [first,second] = tournment(randint(1,nA+nB-1))
+                                                    #####################################################
+                                                    
+                                                    #####################################################
+                                                    #CROSSOVER, DECOMMENT THE RIGHT FUNCTION
+                                                    if(uniform(0,1)<=crossoverProb):
+                                                        if(crossoverMethodParam == 0):
+                                                            child = onePointCrossover(first,second)
+                                                        elif(crossoverMethodParam == 1):
+                                                            child = twoPointCrossoverVerI(first,second)
+                                                        elif(crossoverMethodParam == 2):
+                                                            child = twoPointCrossoverVerII(first,second)
+                                                        elif(crossoverMethodParam == 3):
+                                                            child = positionBasedCrossover(first,second)
+                                                        elif(crossoverMethodParam == 4):
+                                                            child = kStepSizeBasedCrossover(first,second)
+                                                    else:
+                                                        child = Individual()
+                                                        child.genotype = first.genotype
+                                                    #####################################################
 
-                                    #####################################################
-                                    #COMPUTE OBJECTIVE VALUE AND FITNESS
-                                    evaluateFitness(child)
-                                    if(optimum):
-                                        UB = 0
-                                        break
-                                    
-                                    postOptimize(child)
-                                    if(optimum):
-                                        UB = 0
-                                        break
-                                    #####################################################
+                                                    #####################################################
+                                                    #MUTATION, DECOMMENT THE RIGHT FUNCTION
+                                                    if(uniform(0,1) <= mutationProb):
+                                                        if(mutationMethodParam==0):
+                                                            adjacentTwo_JobChange(child)
+                                                        elif(mutationMethodParam==1):
+                                                            arbitraryTwo_JobChange(child)
+                                                        elif(mutationMethodParam==2):
+                                                            arbitraryThree_JobChange(child)
+                                                        elif(mutationMethodParam==3):
+                                                            shift(child)
+                                                        elif(mutationMethodParam==4):
+                                                            arbitraryBatchExchange(child)
+                                                        elif(mutationMethodParam==5):
+                                                            adjacentBatchExchange(child)
+                                                    #####################################################
 
-                                    #####################################################
-                                    #APPEND NEW CHILD, UPDATE NEW INVERSE FITNESS, UPDATE UB, UPDATE BEST
-                                    population_next.append(child)
-                                    newInverseFitness = newInverseFitness + child.fitness
+                                                    #####################################################
+                                                    #COMPUTE OBJECTIVE VALUE AND FITNESS
+                                                    evaluateFitness(child)
+                                                    if(optimum):
+                                                        UB = 0
+                                                        break
+                                                    
+                                                    postOptimize(child)
+                                                    if(optimum):
+                                                        UB = 0
+                                                        break
+                                                    #####################################################
 
-                                    if(child.objF <= UB):
-                                        UB = child.objF
-                                        indexBestChildren = j
+                                                    #####################################################
+                                                    #APPEND NEW CHILD, UPDATE NEW INVERSE FITNESS, UPDATE UB, UPDATE BEST
+                                                    population_next.append(child)
+                                                    newInverseFitness = newInverseFitness + child.fitness
 
-                                        if(child.objF <=0):
-                                            best = child
-                                            optimum = True
-                                            break
-                                    #####################################################
+                                                    if(child.objF <= UB):
+                                                        UB = child.objF
+                                                        indexBestChildren = j
 
-                                #END ITERATION    
-                                if optimum:
-                                    break
+                                                        if(child.objF <=0):
+                                                            best = child
+                                                            optimum = True
+                                                            break
+                                                    #####################################################
 
-                                #####################################################
-                                #REMOVE ONLY ONE CHILD OF THE NEW POPULATION TO INSERT THE PREVIOUS BEST (EXCLUDING, IF IT EXISTS, THE NEW BEST)
-                                #UPDATE THE NEW INVERSE FITNESS AND ASSIGN IT TO THE TOTAL INVERSE FITNESS
-                                try:
-                                    toRemove = choice(list(range(indexBestChildren))+list(range(indexBestChildren+1,sizePopulation)))
-                                except NameError:
-                                    indexBestChildren = 0
-                                    toRemove = randint(0,sizePopulation-1)
-                                newInverseFitness = newInverseFitness - population_next[toRemove].fitness
-                                newInverseFitness = newInverseFitness + best.fitness
-                                totalInverseFitness = newInverseFitness
-                                newInverseFitness = 0
-                            
-                                population_next[toRemove] = best
-                                population = population_next
-                                
-                                if(population_next[indexBestChildren].objF<best.objF):
-                                    best = population_next[indexBestChildren]
-                                #####################################################
-                            #END SCENARIO
+                                                #END ITERATION    
+                                                if optimum:
+                                                    break
 
-                            #####################################################
-                            #UPDATE TOTAL TIME AND WRITE THE RESULT
-                            totalTime = totalTime + (time.time()-start)
-                            totalObjVal = totalObjVal + UB
-                            #####################################################
+                                                #####################################################
+                                                #REMOVE ONLY ONE CHILD OF THE NEW POPULATION TO INSERT THE PREVIOUS BEST (EXCLUDING, IF IT EXISTS, THE NEW BEST)
+                                                #UPDATE THE NEW INVERSE FITNESS AND ASSIGN IT TO THE TOTAL INVERSE FITNESS
+                                                try:
+                                                    toRemove = choice(list(range(indexBestChildren))+list(range(indexBestChildren+1,sizePopulation)))
+                                                except NameError:
+                                                    indexBestChildren = 0
+                                                    toRemove = randint(0,sizePopulation-1)
+                                                newInverseFitness = newInverseFitness - population_next[toRemove].fitness
+                                                newInverseFitness = newInverseFitness + best.fitness
+                                                totalInverseFitness = newInverseFitness
+                                                newInverseFitness = 0
+                                            
+                                                population_next[toRemove] = best
+                                                population = population_next
+                                                
+                                                if(population_next[indexBestChildren].objF<best.objF):
+                                                    best = population_next[indexBestChildren]
+                                                #####################################################
+                                            #END SCENARIO
 
-                        #END SCENARIOS
-                        #####################################################
-                        #SAVE FINAL AVG RESULTS
-                        toAppend = str(nA)+"_"+str(nB)+str(totalTime/50)+";"+str(totalObjVal/50)+"\n"
-                        res.write("AVG TIME,"+toAppend)
+                                            #####################################################
+                                            #UPDATE TOTAL TIME AND WRITE THE RESULT
+                                            totalTime = totalTime + (time.time()-start)
+                                            totalObjVal = totalObjVal + UB
+                                            #####################################################
+
+                                        #END SCENARIOS
+                                        #####################################################
+                                        #SAVE FINAL AVG RESULTS
+                                        toAppend = str(nA)+"_"+str(nB)+str(totalTime/10)+";"+str(totalObjVal/10)+"\n"
+                                        res.write("AVG TIME,"+toAppend)
 
 

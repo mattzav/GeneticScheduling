@@ -1,6 +1,64 @@
-\begin{thebibliography}{0}
+\begin{thebibliography}{11}
 \providecommand{\natexlab}[1]{#1}
 \providecommand{\url}[1]{\texttt{#1}}
 \providecommand{\urlprefix}{URL }
+
+\bibitem[{Abdoun \protect\BIBand{} Abouchabaka(2012)}]{tsp1}
+Abdoun O, Abouchabaka J (2012) A comparative study of adaptive crossover
+  operators for genetic algorithms to resolve the traveling salesman problem.
+  \emph{arXiv preprint arXiv:1203.3097} .
+
+\bibitem[{Agnetis et~al.(2004)Agnetis, Mirchandani, Pacciarelli,
+  \protect\BIBand{} Pacifici}]{agnetis04}
+Agnetis A, Mirchandani PB, Pacciarelli D, Pacifici A (2004) Scheduling problems
+  with two competing agents. \emph{Operations Research} 52(2):229--242.
+
+\bibitem[{Arbib et~al.(2004)Arbib, Smriglio, \protect\BIBand{}
+  Servilio}]{Arbib04}
+Arbib C, Smriglio S, Servilio M (2004) A competitive scheduling problem and its
+  relevance to {UMTS} channel assignment. \emph{Networks} 44(2):132--141,
+  \urlprefix\url{http://dx.doi.org/10.1002/net.20023}.
+
+\bibitem[{Avolio \protect\BIBand{} Fuduli(2020)}]{av-fud20}
+Avolio M, Fuduli A (2020) A subset-sum type formulation of a two-agent
+  single-machine scheduling problem. \emph{Information Processing Letters}
+  155:105886.
+
+\bibitem[{Baker \protect\BIBand{} Smith(2003)}]{baker2003}
+Baker K, Smith J (2003) A multiple-criterion model for machine scheduling.
+  \emph{Journal of Scheduling} 6(1):7--16.
+
+\bibitem[{Deep \protect\BIBand{} Mebrahtu(2011)}]{tsp3}
+Deep K, Mebrahtu H (2011) New variations of order crossover for travelling
+  salesman problem. \emph{International Journal of Combinatorial Optimization
+  Problems and Informatics} 2(1):2--13.
+
+\bibitem[{Kramer(2017)}]{kramer}
+Kramer O (2017) \emph{Genetic Algorithm Essentials}, volume 679 of
+  \emph{Studies in Computational Intelligence} (Springer), ISBN
+  978-3-319-52156-5.
+
+\bibitem[{Larranaga et~al.(1999)Larranaga, Kuijpers, Murga, Inza,
+  \protect\BIBand{} Dizdarevic}]{tsp2}
+Larranaga P, Kuijpers CMH, Murga RH, Inza I, Dizdarevic S (1999) Genetic
+  algorithms for the travelling salesman problem: A review of representations
+  and operators. \emph{Artificial Intelligence Review} 13(2):129--170.
+
+\bibitem[{Murata et~al.(1996)Murata, Ishibuchi, \protect\BIBand{}
+  Tanaka}]{sched1}
+Murata T, Ishibuchi H, Tanaka H (1996) Genetic algorithms for flowshop
+  scheduling problems. \emph{Computers \& Industrial Engineering}
+  30(4):1061--1071.
+
+\bibitem[{Peha(1995)}]{Peha95}
+Peha JM (1995) Heterogeneous-criteria scheduling: Minimizing weighted number of
+  tardy jobs and weighted completion time. \emph{COMPUTERS AND OPERATIONS
+  RESEARCH} 22:1089--1100.
+
+\bibitem[{Pezzella et~al.(2008)Pezzella, Morganti, \protect\BIBand{}
+  Ciaschetti}]{sched3}
+Pezzella F, Morganti G, Ciaschetti G (2008) A genetic algorithm for the
+  flexible job-shop scheduling problem. \emph{Computers \& Operations Research}
+  35(10):3202--3212.
 
 \end{thebibliography}
