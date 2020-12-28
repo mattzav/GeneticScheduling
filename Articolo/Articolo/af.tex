@@ -221,7 +221,7 @@ Before to describe in detail how we implemented each phase of the Algorithm \ref
 Finally, as exit conditions we used a time limit of 1800 seconds like in [2]. Of course, we stop the algorithm also if a null upper bound is found since, by the definition of \refe{BAWCT}, it trivially corresponds to an optimal solution. 
 \subsection{Encoding and Fitness Evaluation}
 The first step in the implementation of a GA is the choice of a suitable encoding for solutions. Since we are dealing with a scheduling problem, the standard way to represent a solution is a vector of values.\\
-Given a solution $S$, we encode it in a vector $V(S)$ of size $n_A+n_B$ such that $V[t] = j$ if and only if job $j$ is scheduled in position $t$ in the solution $S$.\\
+Given a solution $S$, we encode it in a vector $V(S)$ of size $n_A+n_B$ such that $V[t] = j$ if and only if job $j$ is scheduled in position $t$ within the solution $S$. Then from now on, when the referenced solution is clear, we denote by $[t]$ the job processed in position $t$.\\
 Example.
 Let's assume $n_A = 1$ and $n_B=3$.\\
 The following vector of size $n_A+n_B=4$
@@ -234,31 +234,39 @@ The following vector of size $n_A+n_B=4$
 	\node at (0.75,-0.75) {2};
 \end{tikzpicture}
 \end{center}
- encodes the solution in which job $1$, belonging to class $A$, is scheduled in second position, while jobs $2$, $3$ and $4$, belonging to class $B$, are scheduled in fourth, first, and third position, respectively.\\
+ encodes the solution in which job $1$, belonging to class $A$, is scheduled in second position, while jobs $2$, $3$ and $4$, belonging to class $B$, are scheduled in fourth, first, and third position, respectively. Then, from the introduced notation, $[1]=3$, $[2]=1$, $[3]=4$, and $[4]=2$.\\
  Concerning with fitness evaluation, since individual with higher fitness are preferred but we are dealing with a minimization problem, we proceed as follows.\\Let $S$ be a solution for BAWCT. We compute $f(S)$, i.e. its corresponding objective function value, by using \refe{BAWCT} and then we set $fitness_S = \frac{1}{f(S)}$.\\ In this way, when $f(S) \rightarrow 0 $ (that is a trivial lower bound for \refe{BAWCT}) follows that $fitness_S \rightarrow \infty$.
 \subsection{Initial population}
 Once the encoding strategy has been defined, the next step to be performed regards the generation of the initial population.\\
-In our approach, we tried three different techniques: \textit{Random}, \textit{Alternated}, and \textit{Bidirectional}. Since the first one is completely random, by means of the other two we tried to generate a fitter initial population in order to provide the algorithm with a better starting point.
+In our approach we tried three different techniques: \textit{Random}, \textit{Alternated}, and \textit{Bidirectional}. Since the first strategy works completely random and we risk to create an initial population of unbalanced schedules, we defined other two greedy techniques, in order to provide possibly the algorithm with a better starting point.\\
+Let $N = \{1,\ldots,n_A+n_B\}$, $N_A =\{1,\ldots,n_A\}$ and $N_B=\{n_A+1,\ldots,n_A+n_B\}$, the three techniques can be formalized as follows:
 \begin{itemize}
-	\item \textit{Random generation}. Let $N=\{1,\ldots,n_A+n_B\}.$ The genotype of each individual is given by a random permutation of $N$ that trivially represents a feasible solution for BAWCT.
-	\item \textit{Alternated generation}. In order to avoid inserting in the initial population completely unbalanced solutions, the genotype of each individual is given by alternating, until one of the two sets is completely scheduled, the jobs of class $A$ and $B$. Afterwards, potentially remaining jobs are accommodated at the end.
-	\item \textit{Bidirectional generation}. DIRE CHE L?HO INVENTATO Io Let $N_A=\{1,\ldots,n_A\}$ and  $N_B=\{n_A+1,\ldots,n_A+n_B\}$, let's define $P(N_A)$ and $P(N_B)$ being two permutations of $N_A$ and $N_B$, respectively. The generation process can be summarized into two different phases:
+	\item \textit{Random generation}. The genotype of each individual is given by a random permutation of $N$, that trivially represents a feasible solution for BAWCT. Formally, let $P(N)$ be a random permutation of $N$, we set $[i] =  P(N)_i$. 
+	\item \textit{Alternated generation}. The genotype of each individual is given by alternating jobs of the two classes, until one of the two sets is completely scheduled. Afterwards, potentially remaining jobs are accommodated at the end of the sequence.\\
+	 Let $P(N_A)$ and $P(N_B)$ be two permutations of $N_A$ and $N_B$ respectively. The generation process can be formally summarized into two different phases:
 	\begin{enumerate}
-		\item Let $k = \min\{n_A,n_B\}$. This phase performs $k$ different steps each of which aimed at scheduling one job for both of the two classes; in the step $i$-th, jobs $P(N_A)_i$ and $P(N_B)_i$ are assigned to positions $i$ and $n_A+n_B-i$. Following a greedy approach, from the two possible assignments the one currently minimizing \refe{BAWCT} is chosen.  
-		\item This phase is performed whenever $n_A \ne n_B$. If this is the case, the remaining jobs for one of the two class are accommodated in the middle of the sequence. 
+		\item Let $k = \min\{n_A,n_B\}$. In this phase $k$ steps are performed, each of which aimed at scheduling one job for each of the two classes. In particular, for $i=1,\ldots,k$, we set $[i] = P(N_A)_i$ and $[i+1] = P(N_B)_i$.
+		\item This phase is performed whenever $n_A \ne n_B$. If this is the case, remaining jobs for one of the two classes are accommodated at the end of the sequence.\\ Assume $n_A<n_B$, then, for $i=k+1,\ldots,\max\{n_A,n_B\}$, we set $[i] = P(N_B)_i.$ If $n_A>n_B$, it's enough to substitute $P(N_B)$ with $P(N_A)$. 
 	\end{enumerate}
-	Note that for each couple of permutations $(P(N_A),P(N_B))$ the generation process outputs a different schedule. This guarantees a \textit{diversification} in the initial population, even if the same greedy procedure is used for generating each individual.
+	\item \textit{Bidirectional generation}. The genotype of each individual is given by scheduling, at each step of the process, one job for each of the two classes, inserting one of them in the first available position and the other in the last one. At each step, the choice among the two possible assignments is done in a greedy way.\\
+	Let $P(N_A)$ and $P(N_B)$ be two permutations of $N_A$ and $N_B$, respectively. The generation process can be then formally summarized into two different phases:
+	\begin{enumerate}
+		\item Let $k = \min\{n_A,n_B\}$. In this phase $k$ steps are performed, each of which aimed at scheduling one job for both classes.\\ In particular, for $i=1,\ldots,k$, we set either \be \label{eq1}[i] = P(N_A)_i \mbox{ and } [n_A+n_B-i] = P(N_B)_i\ee or \be \label{eq2}[i] = P(N_B)_i \mbox{ and } [n_A+n_B-i] = P(N_A)_i.\ee Following a greedy approach, among \refe{eq1} and \refe{eq2}, the assignment currently minimizing \refe{BAWCT} is chosen.  
+		\item As for the previous technique, this phase is performed whenever $n_A \ne n_B$. If this is the case, remaining jobs for one of the two classes are now accommodated in the middle of the sequence. 
+	\end{enumerate}
+	It's worth noting that in the \textit{Alternated} and \textit{Bidirectional generation}, for each different couple of permutations $(P(N_A),P(N_B))$, the generation process outputs a different schedule. This guarantees a \textit{diversification} in the initial population, even if the same greedy procedure is used for generating each individual.\\ It's trivial to see that this is the case even for the \textit{Random generation.}
 \end{itemize}
 \subsection{Selection}
 Selection is a crucial step in designing a GA since it defines the chance of a given individual to participate in the reproduction process. Since a convergence to optimal solutions is desired, it's recommended to give an higher chance to individuals with an higher fitness value.\\
-In this work, we used three different well-known selection techniques:
+In this work, we tested three different well-known selection techniques: \textit{Roulette wheel}, \textit{Binary tournment}, and \textit{k-tournment.}
 \begin{itemize}
-	\item \textit{Roulette wheel}. With this technique, the selection is performed by simulating a roulette wheel in which each individual is represented by a portion of the roulette whose size depends on its fitness value. In this way, each individual $I$ has a probability $p_I$ to be selected that is proportional to its fitness.\\In particular, we set $$p_I = \frac{fitness_I}{\sum_{i}fitness_i}.$$
-	\item \textit{Binary tournament}. From two randomly selected individuals, the one having highest value of fitness is chosen for reproduction.
+	\item \textit{Roulette wheel}. Following this technique, the selection is performed by simulating a roulette wheel in which each individual is represented by a portion of the roulette whose size depends on its fitness value. In this way, each individual $I$ has a probability $p_I$ to be selected that is proportional to its fitness.\\In particular, we set $$p_I = \frac{fitness_I}{\sum_{i}fitness_i}.$$
+	\item \textit{Binary tournament}. From two randomly selected individuals, the one having highest fitness value is chosen for reproduction.
 	\item \textit{k-tournament}. It's the same as the previous with the only difference that $k$ individuals are involved in the tournament. 
 \end{itemize}
 \subsection{Crossover}
-Once parents are selected, they have to reproduce in order to generate new children. The reproduction process is simulated using crossover operators, aimed at creating a new individual whose features depend on both the parents by mixing their genetic properties. From an algorithmic point of view, this phase is crucial since it allows to navigate the solution space. 
+Once parents are selected, they have to reproduce in order to generate new children. The reproduction process is simulated using crossover operators, aimed at creating a new individual whose features depend on both the parents by mixing their genetic properties. From an algorithmic point of view, this phase is crucial since it allows to navigate the solution space. \\
+In literature, a lot of crossover operators were proposed for scheduling problems and, in general, for sequencing problems like, for example, the well-known traveling salesman problem. However, in \cite{sched1}, the authors noticed that crossover operators mainly proposed for traveling salesman problems don't perform very well in a scheduling context. Then, following their approach, we implemented the following crossover operators: \textit{One-point crossover}, \textit{Two-point crossover Ver. I}, \textit{Two-point crossover Ver. II}, \textit{Position based crossover}, and, additionally, we defined a new crossover operator named \textit{k-AlternateCrossover.}
 \subsection{Mutation}
 \subsection{Local Search}
 \section{Numerical Results}

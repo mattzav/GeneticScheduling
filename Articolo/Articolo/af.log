@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.21 (MiKTeX 20.6.29) (preloaded format=pdflatex 2020.11.24)  28 DEC 2020 00:06
+This is pdfTeX, Version 3.14159265-2.6-1.40.21 (MiKTeX 20.6.29) (preloaded format=pdflatex 2020.11.24)  28 DEC 2020 17:34
 entering extended mode
 **./af.tex
 (af.tex
@@ -702,25 +702,60 @@ Overfull \hbox (7.01488pt too wide) detected at line 197
  []
 
 [2] [3]
-Underfull \hbox (badness 10000) in paragraph at lines 245--246
-[]\OT1/cmr/m/it/11 Bidirectional gen-er-a-tion\OT1/cmr/m/n/11 . DIRE CHE
+Underfull \hbox (badness 10000) in paragraph at lines 249--250
+[]\OT1/cmr/m/n/11 This phase is per-formed when-ever
  []
 
 
-Underfull \hbox (badness 2057) in paragraph at lines 265--313
+Underfull \hbox (badness 10000) in paragraph at lines 249--250
+\OT1/cmr/m/n/11 Assume $\OML/cmm/m/it/11 n[] < n[]$\OT1/cmr/m/n/11 , then, for 
+$\OML/cmm/m/it/11 i \OT1/cmr/m/n/11 = \OML/cmm/m/it/11 k \OT1/cmr/m/n/11 +
+ []
+
+
+Underfull \hbox (badness 1117) in paragraph at lines 249--250
+\OT1/cmr/m/n/11 1\OML/cmm/m/it/11 ; [] ; []\OMS/cmsy/m/n/10.95 f\OML/cmm/m/it/1
+1 n[]; n[]\OMS/cmsy/m/n/10.95 g$\OT1/cmr/m/n/11 , we set $[\OML/cmm/m/it/11 i\O
+T1/cmr/m/n/11 ] = \OML/cmm/m/it/11 P\OT1/cmr/m/n/11 (\OML/cmm/m/it/11 N[]\OT1/c
+mr/m/n/11 )[]\OML/cmm/m/it/11 :$ \OT1/cmr/m/n/11 If
+ []
+
+[4]
+Underfull \hbox (badness 1072) in paragraph at lines 263--263
+\OT1/cmr/m/n/11 the se-lec-tion is per-formed by sim-u-lat-ing a
+ []
+
+
+Underfull \hbox (badness 2142) in paragraph at lines 268--270
+\OT1/cmr/m/n/11 In lit-er-a-ture, a lot of crossover op-er-a-tors
+ []
+
+
+Underfull \hbox (badness 1454) in paragraph at lines 268--270
+\OT1/cmr/m/it/11 Ver. I\OT1/cmr/m/n/11 , \OT1/cmr/m/it/11 Two-point crossover V
+er. II\OT1/cmr/m/n/11 , \OT1/cmr/m/it/11 Po-si-
+ []
+
+
+Underfull \hbox (badness 1888) in paragraph at lines 268--270
+\OT1/cmr/m/it/11 tion based crossover\OT1/cmr/m/n/11 , and, ad-di-tion-ally, we
+
+ []
+
+
+Underfull \hbox (badness 2057) in paragraph at lines 273--321
 \OT1/cmr/m/n/11 Scelta dei parametri, com-mento sull'utilita
  []
 
 
-Underfull \hbox (badness 3724) in paragraph at lines 265--313
+Underfull \hbox (badness 3724) in paragraph at lines 273--321
 \OT1/cmr/m/n/11 dell'inizializzazione in-tel-li-gente con rel-a-tiva
  []
 
-[4]
 
 LaTeX Warning: `h' float specifier changed to `ht'.
 
-(af.bbl
+(af.bbl [5]
 
 LaTeX Font Warning: Font shape `OML/cmm/m/it' in size <6.5> not available
 (Font)              size <6> substituted on input line 20.
@@ -762,7 +797,9 @@ Underfull \hbox (badness 1127) in paragraph at lines 60--63
 \OT1/cmr/m/n/10 ge-netic al-go-rithm for the flex-i-ble job-shop
  []
 
-) [5] [6] (af.aux)
+) [6
+
+] (af.aux)
 
 LaTeX Font Warning: Size substitutions with differences
 (Font)              up to 0.5pt have occurred.
@@ -772,10 +809,10 @@ LaTeX Warning: There were multiply-defined labels.
 
  ) 
 Here is how much of TeX's memory you used:
- 15951 strings out of 480790
- 296696 string characters out of 2897300
- 567948 words of memory out of 3000000
- 31664 multiletter control sequences out of 15000+200000
+ 15953 strings out of 480790
+ 296706 string characters out of 2897300
+ 560966 words of memory out of 3000000
+ 31666 multiletter control sequences out of 15000+200000
  554103 words of font info for 103 fonts, out of 3000000 for 9000
  1141 hyphenation exceptions out of 8191
  60i,14n,60p,998b,550s stack positions out of 5000i,500n,10000p,200000b,50000s
@@ -807,7 +844,7 @@ ic/amsfonts/cm/cmti10.pfb><C:/Users/Matte/AppData/Local/Programs/MiKTeX/fonts/t
 ype1/public/amsfonts/cm/cmti7.pfb><C:/Users/Matte/AppData/Local/Programs/MiKTeX
 /fonts/type1/public/amsfonts/cm/cmti9.pfb><C:/Users/Matte/AppData/Local/Program
 s/MiKTeX/fonts/type1/public/amsfonts/cm/cmtt10.pfb>
-Output written on af.pdf (6 pages, 313047 bytes).
+Output written on af.pdf (6 pages, 315536 bytes).
 PDF statistics:
  125 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
