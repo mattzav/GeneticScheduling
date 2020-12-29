@@ -1,7 +1,11 @@
-\begin{thebibliography}{11}
+\begin{thebibliography}{17}
 \providecommand{\natexlab}[1]{#1}
 \providecommand{\url}[1]{\texttt{#1}}
 \providecommand{\urlprefix}{URL }
+
+\bibitem[{Aarts et~al.(2003)Aarts, Aarts, \protect\BIBand{} Lenstra}]{local}
+Aarts E, Aarts EH, Lenstra JK (2003) \emph{Local search in combinatorial
+  optimization} (Princeton University Press).
 
 \bibitem[{Abdoun \protect\BIBand{} Abouchabaka(2012)}]{tsp1}
 Abdoun O, Abouchabaka J (2012) A comparative study of adaptive crossover
@@ -28,10 +32,21 @@ Avolio M, Fuduli A (2020) A subset-sum type formulation of a two-agent
 Baker K, Smith J (2003) A multiple-criterion model for machine scheduling.
   \emph{Journal of Scheduling} 6(1):7--16.
 
+\bibitem[{Croes(1958)}]{2-opt}
+Croes GA (1958) A method for solving traveling-salesman problems.
+  \emph{Operations research} 6(6):791--812.
+
 \bibitem[{Deep \protect\BIBand{} Mebrahtu(2011)}]{tsp3}
 Deep K, Mebrahtu H (2011) New variations of order crossover for travelling
   salesman problem. \emph{International Journal of Combinatorial Optimization
   Problems and Informatics} 2(1):2--13.
+
+\bibitem[{{Kazimipour} et~al.(2014){Kazimipour}, {Li}, \protect\BIBand{}
+  {Qin}}]{init1}
+{Kazimipour} B, {Li} X, {Qin} AK (2014) A review of population initialization
+  techniques for evolutionary algorithms. \emph{2014 IEEE Congress on
+  Evolutionary Computation (CEC)}, 2585--2592,
+  \urlprefix\url{http://dx.doi.org/10.1109/CEC.2014.6900618}.
 
 \bibitem[{Kramer(2017)}]{kramer}
 Kramer O (2017) \emph{Genetic Algorithm Essentials}, volume 679 of
@@ -60,5 +75,19 @@ Peha JM (1995) Heterogeneous-criteria scheduling: Minimizing weighted number of
 Pezzella F, Morganti G, Ciaschetti G (2008) A genetic algorithm for the
   flexible job-shop scheduling problem. \emph{Computers \& Operations Research}
   35(10):3202--3212.
+
+\bibitem[{Rajakumar(2013)}]{mut1}
+Rajakumar B (2013) Static and adaptive mutation techniques for genetic
+  algorithm: a systematic comparative analysis. \emph{International Journal of
+  Computational Science and Engineering} 8(2):180--193.
+
+\bibitem[{Umbarkar \protect\BIBand{} Sheth(2015)}]{cross1}
+Umbarkar AJ, Sheth PD (2015) Crossover operators in genetic algorithms: a
+  review. \emph{ICTACT journal on soft computing} 6(1).
+
+\bibitem[{Yadav \protect\BIBand{} Sohal(2017)}]{sel1}
+Yadav SL, Sohal A (2017) Comparative study of different selection techniques in
+  genetic algorithm. \emph{International Journal of Engineering, Science and
+  Mathematics} 6(3):174--180.
 
 \end{thebibliography}

@@ -191,7 +191,7 @@ def onePointCrossover(first,second):
     child = Individual()
     child_scheduled = [False]*(nA+nB)
     
-    point = randint(1,nA+nB-1)
+    point = randint(1,nA+nB) #point = randint(1,nA+nB-1)
     
     if uniform(0,1)<=0.5:
         start = 0
@@ -215,7 +215,7 @@ def onePointCrossover(first,second):
     return child
 
 def twoPointCrossoverVerI(first,second):
-    [first_point,second_point] = sample(range(1, nA+nB), 2)
+    [first_point,second_point] = sample(range(1, nA+nB+1), 2) #[first_point,second_point] = sample(range(1, nA+nB), 2)
    
     child = Individual()
     child_scheduled = [False]*(nA+nB)
@@ -243,7 +243,7 @@ def twoPointCrossoverVerI(first,second):
     return child
 
 def twoPointCrossoverVerII(first,second):
-    [first_point,second_point] = sample(range(1, nA+nB), 2)
+    [first_point,second_point] = sample(range(1, nA+nB+1), 2)# [first_point,second_point] = sample(range(1, nA+nB), 2)
 
     child = Individual()
     child_scheduled = [False]*(nA+nB)
