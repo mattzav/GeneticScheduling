@@ -1,4 +1,4 @@
-\begin{thebibliography}{17}
+\begin{thebibliography}{20}
 \providecommand{\natexlab}[1]{#1}
 \providecommand{\url}[1]{\texttt{#1}}
 \providecommand{\urlprefix}{URL }
@@ -7,10 +7,10 @@
 Aarts E, Aarts EH, Lenstra JK (2003) \emph{Local search in combinatorial
   optimization} (Princeton University Press).
 
-\bibitem[{Abdoun \protect\BIBand{} Abouchabaka(2012)}]{tsp1}
-Abdoun O, Abouchabaka J (2012) A comparative study of adaptive crossover
-  operators for genetic algorithms to resolve the traveling salesman problem.
-  \emph{arXiv preprint arXiv:1203.3097} .
+\bibitem[{Agnetis et~al.(2014)Agnetis, Billaut, Gawiejnowicz, Pacciarelli,
+  \protect\BIBand{} Soukhal}]{agnetis-book14}
+Agnetis A, Billaut JC, Gawiejnowicz S, Pacciarelli D, Soukhal A (2014)
+  \emph{Multiagent scheduling: Models and algorithms} (Springer).
 
 \bibitem[{Agnetis et~al.(2004)Agnetis, Mirchandani, Pacciarelli,
   \protect\BIBand{} Pacifici}]{agnetis04}
@@ -20,8 +20,7 @@ Agnetis A, Mirchandani PB, Pacciarelli D, Pacifici A (2004) Scheduling problems
 \bibitem[{Arbib et~al.(2004)Arbib, Smriglio, \protect\BIBand{}
   Servilio}]{Arbib04}
 Arbib C, Smriglio S, Servilio M (2004) A competitive scheduling problem and its
-  relevance to {UMTS} channel assignment. \emph{Networks} 44(2):132--141,
-  \urlprefix\url{http://dx.doi.org/10.1002/net.20023}.
+  relevance to {UMTS} channel assignment. \emph{Networks} 44(2):132--141.
 
 \bibitem[{Avolio \protect\BIBand{} Fuduli(2020)}]{av-fud20}
 Avolio M, Fuduli A (2020) A subset-sum type formulation of a two-agent
@@ -34,7 +33,7 @@ Baker K, Smith J (2003) A multiple-criterion model for machine scheduling.
 
 \bibitem[{Croes(1958)}]{2-opt}
 Croes GA (1958) A method for solving traveling-salesman problems.
-  \emph{Operations research} 6(6):791--812.
+  \emph{Operations Research} 6(6):791--812.
 
 \bibitem[{Deep \protect\BIBand{} Mebrahtu(2011)}]{tsp3}
 Deep K, Mebrahtu H (2011) New variations of order crossover for travelling
@@ -45,13 +44,11 @@ Deep K, Mebrahtu H (2011) New variations of order crossover for travelling
   {Qin}}]{init1}
 {Kazimipour} B, {Li} X, {Qin} AK (2014) A review of population initialization
   techniques for evolutionary algorithms. \emph{2014 IEEE Congress on
-  Evolutionary Computation (CEC)}, 2585--2592,
-  \urlprefix\url{http://dx.doi.org/10.1109/CEC.2014.6900618}.
+  Evolutionary Computation}, 2585--2592.
 
 \bibitem[{Kramer(2017)}]{kramer}
 Kramer O (2017) \emph{Genetic Algorithm Essentials}, volume 679 of
-  \emph{Studies in Computational Intelligence} (Springer), ISBN
-  978-3-319-52156-5.
+  \emph{Studies in Computational Intelligence} (Springer).
 
 \bibitem[{Larranaga et~al.(1999)Larranaga, Kuijpers, Murga, Inza,
   \protect\BIBand{} Dizdarevic}]{tsp2}
@@ -67,14 +64,26 @@ Murata T, Ishibuchi H, Tanaka H (1996) Genetic algorithms for flowshop
 
 \bibitem[{Peha(1995)}]{Peha95}
 Peha JM (1995) Heterogeneous-criteria scheduling: Minimizing weighted number of
-  tardy jobs and weighted completion time. \emph{COMPUTERS AND OPERATIONS
-  RESEARCH} 22:1089--1100.
+  tardy jobs and weighted completion time. \emph{Computers \& Operations
+  Research} 22:1089--1100.
 
 \bibitem[{Pezzella et~al.(2008)Pezzella, Morganti, \protect\BIBand{}
   Ciaschetti}]{sched3}
 Pezzella F, Morganti G, Ciaschetti G (2008) A genetic algorithm for the
   flexible job-shop scheduling problem. \emph{Computers \& Operations Research}
   35(10):3202--3212.
+
+\bibitem[{Pinedo(2009)}]{pinedo09}
+Pinedo ML (2009) \emph{Planning and Scheduling in Manufacturing and Services}
+  (Springer-Verlag).
+
+\bibitem[{Pinedo(2016)}]{pinedo16}
+Pinedo ML (2016) \emph{Scheduling: Theory, algorithms, and systems, fifth
+  edition} (Springer International Publishing).
+
+\bibitem[{Potvin(1996)}]{tsp1}
+Potvin JY (1996) Genetic algorithms for the traveling salesman problem.
+  \emph{Annals of Operations Research} 63(3):337--370.
 
 \bibitem[{Rajakumar(2013)}]{mut1}
 Rajakumar B (2013) Static and adaptive mutation techniques for genetic
