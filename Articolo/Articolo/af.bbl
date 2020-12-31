@@ -1,4 +1,4 @@
-\begin{thebibliography}{20}
+\begin{thebibliography}{19}
 \providecommand{\natexlab}[1]{#1}
 \providecommand{\url}[1]{\texttt{#1}}
 \providecommand{\urlprefix}{URL }
@@ -84,11 +84,6 @@ Pinedo ML (2016) \emph{Scheduling: Theory, algorithms, and systems, fifth
 \bibitem[{Potvin(1996)}]{tsp1}
 Potvin JY (1996) Genetic algorithms for the traveling salesman problem.
   \emph{Annals of Operations Research} 63(3):337--370.
-
-\bibitem[{Rajakumar(2013)}]{mut1}
-Rajakumar B (2013) Static and adaptive mutation techniques for genetic
-  algorithm: a systematic comparative analysis. \emph{International Journal of
-  Computational Science and Engineering} 8(2):180--193.
 
 \bibitem[{Umbarkar \protect\BIBand{} Sheth(2015)}]{cross1}
 Umbarkar AJ, Sheth PD (2015) Crossover operators in genetic algorithms: a

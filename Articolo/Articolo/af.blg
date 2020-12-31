@@ -44,45 +44,45 @@ while executing---line 1494 of file informs2014.bst
 Warning--empty chapter and pages in agnetis-book14
 Warning--empty chapter and pages in pinedo09
 Warning--empty chapter and pages in pinedo16
-You've used 20 entries,
+You've used 19 entries,
             2869 wiz_defined-function locations,
-            721 strings with 7736 characters,
-and the built_in function-call counts, 18042 in all, are:
-= -- 1815
-> -- 421
-< -- 13
-+ -- 170
-- -- 139
-* -- 1306
-:= -- 2259
-add.period$ -- 35
-call.type$ -- 20
-change.case$ -- 141
-chr.to.int$ -- 21
-cite$ -- 23
-duplicate$ -- 1791
-empty$ -- 1455
-format.name$ -- 194
-if$ -- 3707
+            713 strings with 7521 characters,
+and the built_in function-call counts, 17354 in all, are:
+= -- 1746
+> -- 411
+< -- 12
++ -- 166
+- -- 136
+* -- 1261
+:= -- 2167
+add.period$ -- 33
+call.type$ -- 19
+change.case$ -- 135
+chr.to.int$ -- 20
+cite$ -- 22
+duplicate$ -- 1725
+empty$ -- 1394
+format.name$ -- 190
+if$ -- 3565
 int.to.chr$ -- 1
 int.to.str$ -- 1
-missing$ -- 205
-newline$ -- 66
-num.names$ -- 80
-pop$ -- 871
+missing$ -- 196
+newline$ -- 63
+num.names$ -- 76
+pop$ -- 844
 preamble$ -- 1
-purify$ -- 126
+purify$ -- 121
 quote$ -- 0
-skip$ -- 331
+skip$ -- 316
 stack$ -- 0
-substring$ -- 1868
-swap$ -- 461
+substring$ -- 1799
+swap$ -- 439
 text.length$ -- 1
 text.prefix$ -- 0
 top$ -- 0
-type$ -- 165
+type$ -- 156
 warning$ -- 3
-while$ -- 131
+while$ -- 125
 width$ -- 0
-write$ -- 221
+write$ -- 210
 (There were 15 error messages)
