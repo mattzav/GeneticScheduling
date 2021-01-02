@@ -66,7 +66,6 @@ def arbitraryBatchExchange(individual):
 #################
 
 #LOCAL SEARCH AND EVALUATION
-#SUMA = UDPATE?
 def postOptimize(individual):
     global optimum,best
     for i in range(nA+nB-1):
@@ -341,7 +340,6 @@ def kStepSizeBasedCrossover(first, second):
 
 #INIT OPERATORS
 #IN ALTERNATING E BIDIRECTIONAL SI PUO CALCOLARE LA FITNESS MENTRE SI GENERA LA SOLUZIONE E RISPARMIARE TEMPO
-#TESTARE BIDIRECTIONAL, E' STATA SOLO IMPLEMENTATA MA NON HO CONTROLLATO SE FUNZIONA.
 
 def initPopulationRandom():
     global UB, totalInverseFitness, best, optimum, sizePopulation
@@ -365,9 +363,10 @@ def initPopulationRandom():
                 optimum = True
                 return
 
-        postOptimize(individual)
+        #postOptimize(individual)
         population.append(individual)
 
+        ''' utile solo se si fa local search prima
         #update UB
         if individual.objF <= UB:
             UB = individual.objF
@@ -375,7 +374,7 @@ def initPopulationRandom():
             if individual.objF <=0:
                 optimum = True
                 return
-        
+        '''
         totalInverseFitness = totalInverseFitness + individual.fitness
 
 def initPopulationAlternating():
@@ -422,10 +421,11 @@ def initPopulationAlternating():
                 optimum = True
                 return
                 
-        postOptimize(individual)
+        #postOptimize(individual)
 
         population.append(individual)
 
+        ''' utile solo se si fa local search prima
         #update UB
         if individual.objF <= UB:
             UB = individual.objF
@@ -433,7 +433,7 @@ def initPopulationAlternating():
             if individual.objF <=0:
                 optimum = True
                 return
-        
+        '''
         totalInverseFitness = totalInverseFitness + individual.fitness
 
 def initPopulationBidirectional():
@@ -518,10 +518,11 @@ def initPopulationBidirectional():
         setattr(individual,"sumA",totalSumA)
         setattr(individual,"sumB",totalSumB)
 
-        postOptimize(individual)
+        #postOptimize(individual)
 
         population.append(individual)
 
+        '''utile solo se si fa local search prima
         #update UB
         if individual.objF <= UB:
             UB = individual.objF
@@ -529,7 +530,7 @@ def initPopulationBidirectional():
             if individual.objF <=0:
                 optimum = True
                 return
-        
+        '''
         totalInverseFitness = totalInverseFitness + individual.fitness
 
 def initParam():
@@ -577,42 +578,43 @@ if __name__ == "__main__":
     import copy
     import random as r
 
-    populationValue = [10,20,50,100]
-    initMethod = ["Random","Alt","Bi-dir"]
-    crossMethod = ["1P","2Pv1","2Pv2","Pos","kStepSize"]
-    selMethod = ["Roul","2-tour","k-tour"]
-    mutMethod = ["adj2","arb2","arb3","shift","arbBat","adjBat"]
+    populationValue = [10,25]
+    initMethod = ["Ran","Alt","Bid"]
+    crossMethod = ["1P","2Pv1","2Pv2","Pos","kStep"]
+    selMethod = ["Roul","2tour","k-tour"]
+    mutMethod = ["adj2","arb2","arb3","shift","adjBat","arbBat"]
 
     seed(1)
-
-    for populationSizeIndex in range(4):
-        for mutationIndex in range(0,7,2):
-            for crossIndex in range(4,11,2):
-                for crossoverMethodParam in range(3,4):
-                    for selectionMethodParam in range(1,2):
-                        for mutationMethodParam in range(4,5):
-                            for initMethodParam in range(0,3):
-                                res = open("Result\\new\\"+str(populationValue[populationSizeIndex])+" "+str(1-mutationIndex/10)+" "+str(1-crossIndex/10)+" "+initMethod[initMethodParam]+" "+selMethod[selectionMethodParam]+" "+crossMethod[crossoverMethodParam]+" "+mutMethod[mutationMethodParam]+".txt", "a")
+    '''
+    pSize = 10,25
+    CProb = 0.5 0.7 0.9
+    MProb = 0.1 0.3 0.5
+    Init = rand bidir
+    Sel = Roul 2tour
+    Cros = 2pv1 pos kstep
+    Mut = arb3 shift arbBat
+    ''' 
+    for populationSizeIndex in range(2):
+        for crossIndex in range(5,10,2):
+            for mutationIndex in range(1,6,2):
+                for initMethodParam in range(0,3,2):
+                    for selectionMethodParam in range(2):
+                        for crossoverMethodParam in [1,3,4]:
+                            for mutationMethodParam in [2,3,5]:
+                                res = open("Result\\"+str("PSize = "+populationValue[populationSizeIndex])+" CProb = "+str(crossIndex/10)+" MProb = "+str(mutationIndex/10)+" Init = "+initMethod[initMethodParam]+" Sel = "+selMethod[selectionMethodParam]+" Cross = "+crossMethod[crossoverMethodParam]+" Mut = "+mutMethod[mutationMethodParam]+".txt", "a")
                                 for nA in range(50,151,50):
                                     for nB in range(nA,min(251,nA+51),50):
                                         f = open("Dataset\\"+str(nA)+"_"+str(nB)+".txt", "r")
                                         sizePopulation = populationValue[populationSizeIndex]
-                                        mutationProb = 1 - mutationIndex/10
-                                        crossoverProb = 1 - crossIndex/10
+                                        mutationProb = mutationIndex/10
+                                        crossoverProb = crossIndex/10
                                         totalTime = 0
                                         totalObjVal = 0
-                                        print(nA,"_",nB )
+                                        print(nA,"_",nB )                                        
 
-                                        ##to delete
-                                        
-                                        
-
-                                        for scenario in range (10):
+                                        for scenario in range (50):
                                             initParam() #initParameter
                                             start = time.time() #takeTime
-
-
-                                            post = {}
 
                                             #####################################################
                                             #INIT POPULATION, DECOMMENT THE RIGHT FUNCTION
@@ -676,9 +678,9 @@ if __name__ == "__main__":
                                                         elif(mutationMethodParam==3):
                                                             shift(child)
                                                         elif(mutationMethodParam==4):
-                                                            arbitraryBatchExchange(child)
-                                                        elif(mutationMethodParam==5):
                                                             adjacentBatchExchange(child)
+                                                        elif(mutationMethodParam==5):
+                                                            arbitraryBatchExchange(child)
                                                     #####################################################
 
                                                     #####################################################
@@ -743,7 +745,7 @@ if __name__ == "__main__":
                                         #END SCENARIOS
                                         #####################################################
                                         #SAVE FINAL AVG RESULTS
-                                        toAppend = str(nA)+"_"+str(nB)+str(totalTime/10)+";"+str(totalObjVal/10)+"\n"
+                                        toAppend = str(nA)+"_"+str(nB)+str(totalTime/50)+";"+str(totalObjVal/50)+"\n"
                                         res.write("AVG TIME,"+toAppend)
 
 
