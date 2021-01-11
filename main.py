@@ -595,13 +595,13 @@ if __name__ == "__main__":
     Mut = arb3 shift arbBat
     ''' 
     for populationSizeIndex in range(2):
-        for crossIndex in range(5,10,2):
-            for mutationIndex in range(1,6,2):
-                for initMethodParam in range(0,3,2):
+        for crossIndex in range(10,0,-4):
+            for mutationIndex in range(10,0,-4):
+                for initMethodParam in range(2,3,2):
                     for selectionMethodParam in range(2):
                         for crossoverMethodParam in [1,3,4]:
                             for mutationMethodParam in [2,3,5]:
-                                res = open("Result\\"+str("PSize = "+populationValue[populationSizeIndex])+" CProb = "+str(crossIndex/10)+" MProb = "+str(mutationIndex/10)+" Init = "+initMethod[initMethodParam]+" Sel = "+selMethod[selectionMethodParam]+" Cross = "+crossMethod[crossoverMethodParam]+" Mut = "+mutMethod[mutationMethodParam]+".txt", "a")
+                                res = open("Result\\PSize = "+str(populationValue[populationSizeIndex])+" CProb = "+str(crossIndex/10)+" MProb = "+str(mutationIndex/10)+" Init = "+initMethod[initMethodParam]+" Sel = "+selMethod[selectionMethodParam]+" Cross = "+crossMethod[crossoverMethodParam]+" Mut = "+mutMethod[mutationMethodParam]+".txt", "a")
                                 for nA in range(50,151,50):
                                     for nB in range(nA,min(251,nA+51),50):
                                         f = open("Dataset\\"+str(nA)+"_"+str(nB)+".txt", "r")
@@ -613,6 +613,7 @@ if __name__ == "__main__":
                                         print(nA,"_",nB )                                        
 
                                         for scenario in range (50):
+                                            print(scenario)
                                             initParam() #initParameter
                                             start = time.time() #takeTime
 
@@ -645,7 +646,7 @@ if __name__ == "__main__":
                                                     elif (selectionMethodParam == 1):
                                                         [first,second] = tournment(2)
                                                     elif(selectionMethodParam == 2):
-                                                        [first,second] = tournment(randint(1,nA+nB-1))
+                                                        [first,second] = tournment(randint(1,sizePopulation))
                                                     #####################################################
                                                     
                                                     #####################################################
@@ -745,7 +746,7 @@ if __name__ == "__main__":
                                         #END SCENARIOS
                                         #####################################################
                                         #SAVE FINAL AVG RESULTS
-                                        toAppend = str(nA)+"_"+str(nB)+str(totalTime/50)+";"+str(totalObjVal/50)+"\n"
-                                        res.write("AVG TIME,"+toAppend)
+                                        toAppend = str(nA)+"_"+str(nB)+ "Time = "+str(totalTime/50)+" Obj = "+str(totalObjVal/50)+"\n"
+                                        res.write(""+toAppend)
 
 

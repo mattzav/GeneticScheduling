@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.21 (MiKTeX 20.6.29) (preloaded format=pdflatex 2020.11.24)  31 DEC 2020 11:48
+This is pdfTeX, Version 3.14159265-2.6-1.40.21 (MiKTeX 20.6.29) (preloaded format=pdflatex 2020.11.24)  8 JAN 2021 13:31
 entering extended mode
 **./af.tex
 (af.tex
@@ -645,6 +645,12 @@ File: l3backend-pdfmode.def 2020-06-29 L3 backend support: PDF mode
 \l__pdf_internal_box=\box71
 ) (af.aux
 
+LaTeX Warning: Label `eq1' multiply defined.
+
+
+LaTeX Warning: Label `eq2' multiply defined.
+
+
 LaTeX Warning: Label `large' multiply defined.
 
 
@@ -697,107 +703,132 @@ pdftex/config/pdftex.map}
 
 
 ]
-Overfull \hbox (7.01488pt too wide) detected at line 197
+Overfull \hbox (7.01488pt too wide) detected at line 198
 []
  []
 
-[2]
-Underfull \hbox (badness 10000) in paragraph at lines 202--222
+
+Underfull \vbox (badness 1490) has occurred while \output is active []
+
+ [2]
+Underfull \hbox (badness 10000) in paragraph at lines 203--223
 \OT1/cmr/m/n/11 ap-proaches suc-cess-fully ap-plied to many
  []
 
 
-Underfull \hbox (badness 1102) in paragraph at lines 202--222
+Underfull \hbox (badness 1102) in paragraph at lines 203--223
 \OT1/cmr/m/n/11 In GAs set-ting, a geno-type rep-re-sent-ing a
  []
 
 
-Underfull \hbox (badness 1005) in paragraph at lines 202--222
+Underfull \hbox (badness 1005) in paragraph at lines 203--223
 \OT1/cmr/m/n/11 the cur-rent child, we ap-ply a lo-cal search
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 202--222
+Underfull \hbox (badness 10000) in paragraph at lines 203--223
 
  []
 
 [3]
-Underfull \hbox (badness 10000) in paragraph at lines 249--250
+Underfull \hbox (badness 10000) in paragraph at lines 250--251
 []\OT1/cmr/m/n/11 This phase is per-formed when-ever
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 249--250
+Underfull \hbox (badness 10000) in paragraph at lines 250--251
+\OT1/cmr/m/n/11 Assume $\OML/cmm/m/it/11 n[] < n[]$\OT1/cmr/m/n/11 , then, for 
+$\OML/cmm/m/it/11 i \OT1/cmr/m/n/11 = \OML/cmm/m/it/11 k \OT1/cmr/m/n/11 +
+ []
+
+[4]
+Underfull \hbox (badness 10000) in paragraph at lines 256--257
 \OT1/cmr/m/n/11 Assume $\OML/cmm/m/it/11 n[] < n[]$\OT1/cmr/m/n/11 , then, for 
 $\OML/cmm/m/it/11 i \OT1/cmr/m/n/11 = \OML/cmm/m/it/11 k \OT1/cmr/m/n/11 +
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 255--256
-\OT1/cmr/m/n/11 Assume $\OML/cmm/m/it/11 n[] < n[]$\OT1/cmr/m/n/11 , then, for 
-$\OML/cmm/m/it/11 i \OT1/cmr/m/n/11 = \OML/cmm/m/it/11 k \OT1/cmr/m/n/11 +
- []
-
-
-Underfull \hbox (badness 1117) in paragraph at lines 255--256
+Underfull \hbox (badness 1117) in paragraph at lines 256--257
 \OT1/cmr/m/n/11 1\OML/cmm/m/it/11 ; [] ; []\OMS/cmsy/m/n/10.95 f\OML/cmm/m/it/1
 1 n[]; n[]\OMS/cmsy/m/n/10.95 g$\OT1/cmr/m/n/11 , we set $[\OML/cmm/m/it/11 i\O
 T1/cmr/m/n/11 ] = \OML/cmm/m/it/11 P\OT1/cmr/m/n/11 (\OML/cmm/m/it/11 N[]\OT1/c
 mr/m/n/11 )[]\OML/cmm/m/it/11 :$ \OT1/cmr/m/n/11 If
  []
 
-[4]
-Underfull \hbox (badness 1072) in paragraph at lines 263--263
-\OT1/cmr/m/n/11 the se-lec-tion is per-formed by sim-u-lat-ing a
+
+Underfull \hbox (badness 2134) in paragraph at lines 262--262
+[]\OT1/cmr/m/n/11 Let $\OML/cmm/m/it/11 k \OT1/cmr/m/n/11 = []\OMS/cmsy/m/n/10.
+95 fb\OML/cmm/m/it/11 n[]=\OT1/cmr/m/n/11 2\OMS/cmsy/m/n/10.95 c\OML/cmm/m/it/1
+1 ; \OMS/cmsy/m/n/10.95 b\OML/cmm/m/it/11 n[]=\OT1/cmr/m/n/11 2\OMS/cmsy/m/n/10
+.95 cg$\OT1/cmr/m/n/11 . In this
  []
 
 
-Underfull \hbox (badness 2846) in paragraph at lines 268--271
+Underfull \hbox (badness 10000) in paragraph at lines 263--264
+\OT1/cmr/m/n/11 Assume $\OML/cmm/m/it/11 n[] < n[]$\OT1/cmr/m/n/11 , then, for 
+$\OML/cmm/m/it/11 i \OT1/cmr/m/n/11 = \OML/cmm/m/it/11 k \OT1/cmr/m/n/11 +
+ []
+
+
+Underfull \hbox (badness 1117) in paragraph at lines 263--264
+\OT1/cmr/m/n/11 1\OML/cmm/m/it/11 ; [] ; []\OMS/cmsy/m/n/10.95 f\OML/cmm/m/it/1
+1 n[]; n[]\OMS/cmsy/m/n/10.95 g$\OT1/cmr/m/n/11 , we set $[\OML/cmm/m/it/11 i\O
+T1/cmr/m/n/11 ] = \OML/cmm/m/it/11 P\OT1/cmr/m/n/11 (\OML/cmm/m/it/11 N[]\OT1/c
+mr/m/n/11 )[]\OML/cmm/m/it/11 :$ \OT1/cmr/m/n/11 If
+ []
+
+
+Underfull \hbox (badness 1072) in paragraph at lines 271--271
+\OT1/cmr/m/n/11 the se-lec-tion is per-formed by sim-u-lat-ing a
+ []
+
+[5]
+Underfull \hbox (badness 2846) in paragraph at lines 276--279
 \OT1/cmr/m/n/11 In lit-er-a-ture a lot of crossover op-er-a-tors
  []
 
 
-Underfull \hbox (badness 1107) in paragraph at lines 268--271
+Underfull \hbox (badness 1107) in paragraph at lines 276--279
 \OT1/cmr/m/n/11 well-known trav-el-ing sales-man prob-lem (for
  []
 
 
-Underfull \hbox (badness 1454) in paragraph at lines 268--271
+Underfull \hbox (badness 1454) in paragraph at lines 276--279
 \OT1/cmr/m/it/11 Ver. I\OT1/cmr/m/n/11 , \OT1/cmr/m/it/11 Two-point crossover V
 er. II\OT1/cmr/m/n/11 , \OT1/cmr/m/it/11 Po-si-
  []
 
 
-Underfull \hbox (badness 1888) in paragraph at lines 268--271
+Underfull \hbox (badness 1888) in paragraph at lines 276--279
 \OT1/cmr/m/it/11 tion based crossover\OT1/cmr/m/n/11 , and, ad-di-tion-ally, we
 
  []
 
-[5]
-Underfull \hbox (badness 1210) in paragraph at lines 289--290
+
+Underfull \hbox (badness 1210) in paragraph at lines 297--298
 []\OT1/cmr/m/it/11 Adjacent batch change. \OT1/cmr/m/n/11 A po-si-tion $\OML/cm
 m/m/it/11 i \OMS/cmsy/m/n/10.95 2
  []
 
 
-Underfull \hbox (badness 4266) in paragraph at lines 289--290
+Underfull \hbox (badness 4266) in paragraph at lines 297--298
 \OT1/cmr/m/n/11 [1\OML/cmm/m/it/11 ; n[] \OT1/cmr/m/n/11 + \OML/cmm/m/it/11 n[]
  \OMS/cmsy/m/n/10.95   \OT1/cmr/m/n/11 1]$ and a batch size $\OML/cmm/m/it/11 s
  \OMS/cmsy/m/n/10.95 2
  []
 
 
-Underfull \hbox (badness 2368) in paragraph at lines 290--291
+Underfull \hbox (badness 2368) in paragraph at lines 298--299
 []\OT1/cmr/m/it/11 Arbitrary batch change. \OT1/cmr/m/n/11 Two po-si-tions
  []
 
-
-Underfull \hbox (badness 2057) in paragraph at lines 297--345
+[6]
+Underfull \hbox (badness 2057) in paragraph at lines 305--353
 \OT1/cmr/m/n/11 Scelta dei parametri, com-mento sull'utilita
  []
 
 
-Underfull \hbox (badness 3724) in paragraph at lines 297--345
+Underfull \hbox (badness 3724) in paragraph at lines 305--353
 \OT1/cmr/m/n/11 dell'inizializzazione in-tel-li-gente con rel-a-tiva
  []
 
@@ -810,12 +841,12 @@ LaTeX Warning: `h' float specifier changed to `ht'.
 
 LaTeX Warning: `h' float specifier changed to `ht'.
 
-(af.bbl [6]
+(af.bbl
 Underfull \hbox (badness 10000) in paragraph at lines 35--37
 \OT1/cmr/m/n/10 salesman prob-lems. \OT1/cmr/m/it/10 Op-er-a-tions Re-search
  []
 
-
+[7]
 Underfull \hbox (badness 1331) in paragraph at lines 61--64
 []\OT1/cmr/m/n/10 Murata T, Ishibuchi H, Tanaka H (1996) Ge-
  []
@@ -831,7 +862,9 @@ Underfull \hbox (badness 1127) in paragraph at lines 72--75
 \OT1/cmr/m/n/10 ge-netic al-go-rithm for the flex-i-ble job-shop
  []
 
-) [7] [8] (af.aux)
+) [8
+
+] (af.aux)
 
 LaTeX Warning: There were multiply-defined labels.
 
@@ -839,11 +872,11 @@ LaTeX Warning: There were multiply-defined labels.
 Here is how much of TeX's memory you used:
  15960 strings out of 480790
  296834 string characters out of 2897300
- 565315 words of memory out of 3000000
+ 566315 words of memory out of 3000000
  31675 multiletter control sequences out of 15000+200000
  551670 words of font info for 93 fonts, out of 3000000 for 9000
  1141 hyphenation exceptions out of 8191
- 60i,14n,60p,997b,550s stack positions out of 5000i,500n,10000p,200000b,50000s
+ 60i,15n,60p,1115b,550s stack positions out of 5000i,500n,10000p,200000b,50000s
  <C:\Users\Matte\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\tcrm
 1095.pk><C:/Users/Matte/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfon
 ts/cm/cmbx10.pfb><C:/Users/Matte/AppData/Local/Programs/MiKTeX/fonts/type1/publ
@@ -871,7 +904,7 @@ nts/cm/cmsy9.pfb><C:/Users/Matte/AppData/Local/Programs/MiKTeX/fonts/type1/publ
 ic/amsfonts/cm/cmti10.pfb><C:/Users/Matte/AppData/Local/Programs/MiKTeX/fonts/t
 ype1/public/amsfonts/cm/cmti7.pfb><C:/Users/Matte/AppData/Local/Programs/MiKTeX
 /fonts/type1/public/amsfonts/cm/cmti9.pfb>
-Output written on af.pdf (8 pages, 314426 bytes).
+Output written on af.pdf (8 pages, 316957 bytes).
 PDF statistics:
  129 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
