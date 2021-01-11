@@ -604,7 +604,7 @@ public class Main {
 			double currSumA = 0, currSumB = 0, cumulative = 0, totalSum = pSum;
 
 			for (int j = 0; j < nA / 2 + nB / 2; j++) {
-				if (j % 2 == 0 || j >= nB) {
+				if ((j % 2 == 0 && j + 1 < nA) || j >= nB) {
 					double case1SumA = currSumA + totalSum * w[_1_nA.get(j + 1)]
 							+ (cumulative + p[_1_nA.get(j)]) * w[_1_nA.get(j)];
 
