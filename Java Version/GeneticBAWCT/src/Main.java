@@ -5,8 +5,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Random;
 import java.util.Scanner;
-import java.util.concurrent.ThreadLocalRandom;
 
+import jxl.write.Number;
 import jxl.Workbook;
 import jxl.write.Label;
 import jxl.write.WritableSheet;
@@ -19,11 +19,11 @@ public class Main {
 	static WritableWorkbook workBook = null;
 	static WritableSheet excelSheet;
 
-	static int[] populationSizeArray = { 10, 25, 50 };
-	static double[] crossoverProbabilityArray = { 1, 0.8, 0.6, 0.4, 0.2, 0.1 };
-	static double[] mutationProbabilityArray = { 1, 0.8, 0.6, 0.4, 0.2, 0.1 };
-	static int[] initMethodArray = { 0, 1, 2 };
-	static int[] selectionMethodArray = { 0, 1, 2 };
+	static int[] populationSizeArray = { 10 };
+	static double[] crossoverProbabilityArray = { 1 };
+	static double[] mutationProbabilityArray = { 0.8 };
+	static int[] initMethodArray = { 2 };
+	static int[] selectionMethodArray = { 1 };
 	static int[] crossoverMethodArray = { 0, 1, 2, 3 };
 	static int[] mutationMethodArray = { 0, 1, 2, 3, 4, 5 };
 
@@ -57,32 +57,32 @@ public class Main {
 		r = new Random();
 		r.setSeed(1);
 
-		for (int populationIndex = 0; populationIndex < populationSizeArray.length; populationIndex++)
-			for (int crossoverProbabilityIndex = 0; crossoverProbabilityIndex < crossoverProbabilityArray.length; crossoverProbabilityIndex++)
-				for (int mutationProbabilityIndex = 0; mutationProbabilityIndex < mutationProbabilityArray.length; mutationProbabilityIndex++)
+		double numInstances = 20;
+
+		for (int crossoverProbabilityIndex = 0; crossoverProbabilityIndex < crossoverProbabilityArray.length; crossoverProbabilityIndex++)
+			for (int mutationProbabilityIndex = 0; mutationProbabilityIndex < mutationProbabilityArray.length; mutationProbabilityIndex++)
+				for (int populationIndex = 0; populationIndex < populationSizeArray.length; populationIndex++)
 					for (int initMethodIndex = 0; initMethodIndex < initMethodArray.length; initMethodIndex++)
-						for (int selectionMethodIndex = 0; selectionMethodIndex < selectionMethodArray.length; selectionMethodIndex++)
-							for (int crossoverMethodIndex = 0; crossoverMethodIndex < crossoverMethodArray.length; crossoverMethodIndex++)
-								for (int mutationMethodIndex = 0; mutationMethodIndex < mutationMethodArray.length; mutationMethodIndex++) {
+						for (int crossoverMethodIndex = 0; crossoverMethodIndex < crossoverMethodArray.length; crossoverMethodIndex++)
+							for (int mutationMethodIndex = 0; mutationMethodIndex < mutationMethodArray.length; mutationMethodIndex++)
+								for (int selectionMethodIndex = 0; selectionMethodIndex < selectionMethodArray.length; selectionMethodIndex++) {
 
 									initOutParameters(populationIndex, crossoverProbabilityIndex,
 											mutationProbabilityIndex, initMethodIndex, selectionMethodIndex,
 											crossoverMethodIndex, mutationMethodIndex);
 
 									createExcelFile();
+									int rowExcel = 1;
 
 									for (nA = 50; nA <= 250; nA += 50) {
-										for (nB = nA; nB <= Math.min(nA + 50, 251); nB += 50) {
+										for (nB = nA; nB <= nA; nB += 50) {
 
 											scanner_input = new Scanner(
-													new File("src\\Dataset\\" + nA + "_" + nB + ".txt"));
+													new File("src\\Dataset\\BigInterval\\" + nA + "_" + nB + ".txt"));
 											System.out.println(nA + " " + nB);
 											double totalTime = 0, totalObjVal = 0;
-											int totalIter = 0;
-											/*
-											 * popSize = .. mutProb = ..
-											 */
-											for (int scenario = 0; scenario < 50; scenario++) {
+											double totalIter = 0;
+											for (int scenario = 0; scenario < numInstances; scenario++) {
 												initParameters();
 
 												long start = System.currentTimeMillis();
@@ -212,15 +212,42 @@ public class Main {
 
 											}
 
+											double avgTime = (totalTime / 1000) / numInstances;
+											double avgObj = totalObjVal / numInstances;
+											double avgIter = totalIter / numInstances;
+
 											// SCRIVERE I RISULTATI SU FILE
-											System.out.println(
-													"nA = " + nA + " nB = " + nB + " time = " + (totalTime / 50) / 1000
-															+ " obj = " + totalObjVal / 50 + " iter" + totalIter / 50);
+											System.out.println("nA = " + nA + " nB = " + nB + " obj = " + avgObj
+													+ " time = " + avgTime + " iter" + avgIter);
+											addValueToExcel(rowExcel++, avgObj, avgTime, avgIter);
 										}
 									}
 									closeExcelFile();
 
 								}
+	}
+
+	private static void addValueToExcel(int excelRow, double fo, double time, double i) {
+		try {
+
+			Number number = new Number(0, excelRow, nA);
+			excelSheet.addCell(number);
+
+			number = new Number(1, excelRow, nB);
+			excelSheet.addCell(number);
+
+			number = new Number(2, excelRow, fo);
+			excelSheet.addCell(number);
+
+			number = new Number(3, excelRow, time);
+			excelSheet.addCell(number);
+
+			number = new Number(4, excelRow, i);
+			excelSheet.addCell(number);
+
+		} catch (Exception ex) {
+			throw new RuntimeException("Error adding excel value");
+		}
 	}
 
 	private static void closeExcelFile() {
@@ -261,11 +288,12 @@ public class Main {
 			label = new Label(2, 0, "f_o");
 			excelSheet.addCell(label);
 
-			label = new Label(3, 0, "N. Iter");
+			label = new Label(3, 0, "time");
 			excelSheet.addCell(label);
 
-			label = new Label(4, 0, "time");
+			label = new Label(4, 0, "N. Iter");
 			excelSheet.addCell(label);
+
 		} catch (Exception e) {
 			throw new RuntimeException("error creating excel file");
 		}

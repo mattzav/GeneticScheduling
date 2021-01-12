@@ -5,12 +5,12 @@ Reallocating 'name_of_file' (item size: 1) to 12 items.
 The style file: informs2014.bst
 Reallocating 'name_of_file' (item size: 1) to 6 items.
 Database file #1: sched.bib
-I was expecting a `,' or a `}'---line 219 of file sched.bib
+I was expecting a `,' or a `}'---line 228 of file sched.bib
  :  
  :  Address={New York}
 (Error may have been on previous line)
 I'm skipping whatever remains of this entry
-I was expecting a `,' or a `}'---line 238 of file sched.bib
+I was expecting a `,' or a `}'---line 247 of file sched.bib
  :  
  :  Address={Berlin}
 (Error may have been on previous line)
@@ -46,43 +46,43 @@ Warning--empty chapter and pages in pinedo09
 Warning--empty chapter and pages in pinedo16
 You've used 19 entries,
             2869 wiz_defined-function locations,
-            713 strings with 7521 characters,
-and the built_in function-call counts, 17354 in all, are:
-= -- 1746
-> -- 411
-< -- 12
-+ -- 166
-- -- 136
-* -- 1261
-:= -- 2167
+            712 strings with 7606 characters,
+and the built_in function-call counts, 17855 in all, are:
+= -- 1806
+> -- 428
+< -- 11
++ -- 172
+- -- 142
+* -- 1306
+:= -- 2213
 add.period$ -- 33
 call.type$ -- 19
-change.case$ -- 135
+change.case$ -- 137
 chr.to.int$ -- 20
 cite$ -- 22
-duplicate$ -- 1725
-empty$ -- 1394
-format.name$ -- 190
-if$ -- 3565
+duplicate$ -- 1783
+empty$ -- 1424
+format.name$ -- 198
+if$ -- 3667
 int.to.chr$ -- 1
 int.to.str$ -- 1
-missing$ -- 196
+missing$ -- 198
 newline$ -- 63
 num.names$ -- 76
-pop$ -- 844
+pop$ -- 876
 preamble$ -- 1
-purify$ -- 121
+purify$ -- 123
 quote$ -- 0
-skip$ -- 316
+skip$ -- 317
 stack$ -- 0
-substring$ -- 1799
-swap$ -- 439
+substring$ -- 1877
+swap$ -- 444
 text.length$ -- 1
 text.prefix$ -- 0
 top$ -- 0
 type$ -- 156
 warning$ -- 3
-while$ -- 125
+while$ -- 127
 width$ -- 0
 write$ -- 210
 (There were 15 error messages)

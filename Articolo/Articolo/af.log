@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.21 (MiKTeX 20.6.29) (preloaded format=pdflatex 2020.11.24)  11 JAN 2021 13:26
+This is pdfTeX, Version 3.14159265-2.6-1.40.21 (MiKTeX 20.6.29) (preloaded format=pdflatex 2020.11.24)  12 JAN 2021 16:30
 entering extended mode
 **./af.tex
 (af.tex
@@ -643,23 +643,7 @@ mode.def
 File: l3backend-pdfmode.def 2020-06-29 L3 backend support: PDF mode
 \l__kernel_color_stack_int=\count318
 \l__pdf_internal_box=\box71
-) (af.aux
-
-LaTeX Warning: Label `eq1' multiply defined.
-
-
-LaTeX Warning: Label `eq2' multiply defined.
-
-
-LaTeX Warning: Label `large' multiply defined.
-
-
-LaTeX Warning: Label `large' multiply defined.
-
-
-LaTeX Warning: Label `large' multiply defined.
-
-)
+) (af.aux)
 \openout1 = `af.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 75.
@@ -730,84 +714,66 @@ Underfull \hbox (badness 10000) in paragraph at lines 203--223
 
  []
 
-[3]
-Underfull \hbox (badness 10000) in paragraph at lines 250--251
-[]\OT1/cmr/m/n/11 This phase is per-formed when-ever
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 250--251
-\OT1/cmr/m/n/11 Assume $\OML/cmm/m/it/11 n[] < n[]$\OT1/cmr/m/n/11 , then, for 
-$\OML/cmm/m/it/11 i \OT1/cmr/m/n/11 = \OML/cmm/m/it/11 k \OT1/cmr/m/n/11 +
- []
-
-[4]
-Underfull \hbox (badness 10000) in paragraph at lines 256--257
-\OT1/cmr/m/n/11 Assume $\OML/cmm/m/it/11 n[] < n[]$\OT1/cmr/m/n/11 , then, for 
-$\OML/cmm/m/it/11 i \OT1/cmr/m/n/11 = \OML/cmm/m/it/11 k \OT1/cmr/m/n/11 +
- []
-
-
-Underfull \hbox (badness 1117) in paragraph at lines 256--257
-\OT1/cmr/m/n/11 1\OML/cmm/m/it/11 ; [] ; []\OMS/cmsy/m/n/10.95 f\OML/cmm/m/it/1
-1 n[]; n[]\OMS/cmsy/m/n/10.95 g$\OT1/cmr/m/n/11 , we set $[\OML/cmm/m/it/11 i\O
-T1/cmr/m/n/11 ] = \OML/cmm/m/it/11 P\OT1/cmr/m/n/11 (\OML/cmm/m/it/11 N[]\OT1/c
-mr/m/n/11 )[]\OML/cmm/m/it/11 :$ \OT1/cmr/m/n/11 If
- []
-
-
-Underfull \hbox (badness 1072) in paragraph at lines 271--271
+[3] [4]
+Underfull \hbox (badness 1072) in paragraph at lines 263--263
 \OT1/cmr/m/n/11 the se-lec-tion is per-formed by sim-u-lat-ing a
  []
 
 
-Underfull \hbox (badness 2846) in paragraph at lines 276--279
+Underfull \hbox (badness 2846) in paragraph at lines 268--271
 \OT1/cmr/m/n/11 In lit-er-a-ture a lot of crossover op-er-a-tors
  []
 
 
-Underfull \hbox (badness 1107) in paragraph at lines 276--279
+Underfull \hbox (badness 1107) in paragraph at lines 268--271
 \OT1/cmr/m/n/11 well-known trav-el-ing sales-man prob-lem (for
  []
 
 
-Underfull \hbox (badness 1454) in paragraph at lines 276--279
+Underfull \hbox (badness 1454) in paragraph at lines 268--271
 \OT1/cmr/m/it/11 Ver. I\OT1/cmr/m/n/11 , \OT1/cmr/m/it/11 Two-point crossover V
 er. II\OT1/cmr/m/n/11 , \OT1/cmr/m/it/11 Po-si-
  []
 
 
-Underfull \hbox (badness 1888) in paragraph at lines 276--279
+Underfull \hbox (badness 1888) in paragraph at lines 268--271
 \OT1/cmr/m/it/11 tion based crossover\OT1/cmr/m/n/11 , and, ad-di-tion-ally, we
 
  []
 
 [5]
-Underfull \hbox (badness 1210) in paragraph at lines 296--297
+Underfull \hbox (badness 1210) in paragraph at lines 288--289
 []\OT1/cmr/m/it/11 Adjacent batch change. \OT1/cmr/m/n/11 A po-si-tion $\OML/cm
 m/m/it/11 i \OMS/cmsy/m/n/10.95 2
  []
 
 
-Underfull \hbox (badness 4266) in paragraph at lines 296--297
+Underfull \hbox (badness 4266) in paragraph at lines 288--289
 \OT1/cmr/m/n/11 [1\OML/cmm/m/it/11 ; n[] \OT1/cmr/m/n/11 + \OML/cmm/m/it/11 n[]
  \OMS/cmsy/m/n/10.95   \OT1/cmr/m/n/11 1]$ and a batch size $\OML/cmm/m/it/11 s
  \OMS/cmsy/m/n/10.95 2
  []
 
 
-Underfull \hbox (badness 2368) in paragraph at lines 297--298
+Underfull \hbox (badness 2368) in paragraph at lines 289--290
 []\OT1/cmr/m/it/11 Arbitrary batch change. \OT1/cmr/m/n/11 Two po-si-tions
  []
 
 [6]
-Underfull \hbox (badness 2057) in paragraph at lines 304--354
-\OT1/cmr/m/n/11 Scelta dei parametri, com-mento sull'utilita
+Underfull \hbox (badness 10000) in paragraph at lines 302--303
+[]\OT1/cmr/m/n/11 crossover prob-a-bil-ity $\OML/cmm/m/it/11 P[] \OMS/cmsy/m/n/
+10.95 2
  []
 
 
-Underfull \hbox (badness 3724) in paragraph at lines 304--354
-\OT1/cmr/m/n/11 dell'inizializzazione in-tel-li-gente con rel-a-tiva
+Underfull \hbox (badness 10000) in paragraph at lines 303--304
+[]\OT1/cmr/m/n/11 mutation prob-a-bil-ity $\OML/cmm/m/it/11 P[] \OMS/cmsy/m/n/1
+0.95 2
+ []
+
+
+Underfull \hbox (badness 3049) in paragraph at lines 329--330
+\OT1/cmr/m/n/11 RISPETTO ALL'ALTRO AP-PROC-CIO O
  []
 
 
@@ -822,72 +788,71 @@ LaTeX Warning: `h' float specifier changed to `ht'.
 
 LaTeX Warning: `h' float specifier changed to `ht'.
 
-(af.bbl
-Underfull \hbox (badness 10000) in paragraph at lines 35--37
-\OT1/cmr/m/n/10 salesman prob-lems. \OT1/cmr/m/it/10 Op-er-a-tions Re-search
- []
 
-[7]
-Underfull \hbox (badness 1331) in paragraph at lines 61--64
+LaTeX Warning: `h' float specifier changed to `ht'.
+
+
+LaTeX Warning: `h' float specifier changed to `ht'.
+
+
+LaTeX Warning: `h' float specifier changed to `ht'.
+
+[7] (af.bbl
+Underfull \hbox (badness 1331) in paragraph at lines 63--66
 []\OT1/cmr/m/n/10 Murata T, Ishibuchi H, Tanaka H (1996) Ge-
  []
 
 
-Underfull \hbox (badness 1824) in paragraph at lines 61--64
+Underfull \hbox (badness 1824) in paragraph at lines 63--66
 \OT1/cmr/m/n/10 lems. \OT1/cmr/m/it/10 Com-put-ers & In-dus-trial En-gi-neer-in
 g
  []
 
 
-Underfull \hbox (badness 1127) in paragraph at lines 72--75
+Underfull \hbox (badness 1127) in paragraph at lines 74--77
 \OT1/cmr/m/n/10 ge-netic al-go-rithm for the flex-i-ble job-shop
  []
 
-) [8
+) [8] [9
 
-] (af.aux)
-
-LaTeX Warning: There were multiply-defined labels.
-
- ) 
+] [10] (af.aux) ) 
 Here is how much of TeX's memory you used:
- 15960 strings out of 480790
- 296834 string characters out of 2897300
- 563315 words of memory out of 3000000
- 31675 multiletter control sequences out of 15000+200000
+ 15967 strings out of 480790
+ 296917 string characters out of 2897300
+ 584378 words of memory out of 3000000
+ 31682 multiletter control sequences out of 15000+200000
  551670 words of font info for 93 fonts, out of 3000000 for 9000
  1141 hyphenation exceptions out of 8191
  60i,15n,60p,1115b,550s stack positions out of 5000i,500n,10000p,200000b,50000s
- <C:\Users\Matte\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\tcrm
-1095.pk><C:/Users/Matte/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfon
-ts/cm/cmbx10.pfb><C:/Users/Matte/AppData/Local/Programs/MiKTeX/fonts/type1/publ
-ic/amsfonts/cm/cmbx7.pfb><C:/Users/Matte/AppData/Local/Programs/MiKTeX/fonts/ty
-pe1/public/amsfonts/cm/cmbx9.pfb><C:/Users/Matte/AppData/Local/Programs/MiKTeX/
-fonts/type1/public/amsfonts/cm/cmbxti10.pfb><C:/Users/Matte/AppData/Local/Progr
-ams/MiKTeX/fonts/type1/public/amsfonts/cm/cmex10.pfb><C:/Users/Matte/AppData/Lo
-cal/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi10.pfb><C:/Users/Matte/A
-ppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi5.pfb><C:/Users
-/Matte/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi6.pfb><
-C:/Users/Matte/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmm
-i7.pfb><C:/Users/Matte/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfont
-s/cm/cmmi8.pfb><C:/Users/Matte/AppData/Local/Programs/MiKTeX/fonts/type1/public
-/amsfonts/cm/cmmi9.pfb><C:/Users/Matte/AppData/Local/Programs/MiKTeX/fonts/type
-1/public/amsfonts/cm/cmr10.pfb><C:/Users/Matte/AppData/Local/Programs/MiKTeX/fo
-nts/type1/public/amsfonts/cm/cmr7.pfb><C:/Users/Matte/AppData/Local/Programs/Mi
-KTeX/fonts/type1/public/amsfonts/cm/cmr8.pfb><C:/Users/Matte/AppData/Local/Prog
-rams/MiKTeX/fonts/type1/public/amsfonts/cm/cmr9.pfb><C:/Users/Matte/AppData/Loc
-al/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmssbx10.pfb><C:/Users/Matte/
-AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy10.pfb><C:/Use
-rs/Matte/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy7.pfb
-><C:/Users/Matte/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/c
-msy8.pfb><C:/Users/Matte/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfo
-nts/cm/cmsy9.pfb><C:/Users/Matte/AppData/Local/Programs/MiKTeX/fonts/type1/publ
-ic/amsfonts/cm/cmti10.pfb><C:/Users/Matte/AppData/Local/Programs/MiKTeX/fonts/t
-ype1/public/amsfonts/cm/cmti7.pfb><C:/Users/Matte/AppData/Local/Programs/MiKTeX
-/fonts/type1/public/amsfonts/cm/cmti9.pfb>
-Output written on af.pdf (8 pages, 317200 bytes).
+ <C:\Users\Matte\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen
+/ec/dpi600\tcrm1095.pk><C:/Users/Matte/AppData/Local/Programs/MiKTeX/fonts/type
+1/public/amsfonts/cm/cmbx10.pfb><C:/Users/Matte/AppData/Local/Programs/MiKTeX/f
+onts/type1/public/amsfonts/cm/cmbx7.pfb><C:/Users/Matte/AppData/Local/Programs/
+MiKTeX/fonts/type1/public/amsfonts/cm/cmbx9.pfb><C:/Users/Matte/AppData/Local/P
+rograms/MiKTeX/fonts/type1/public/amsfonts/cm/cmbxti10.pfb><C:/Users/Matte/AppD
+ata/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmex10.pfb><C:/Users/M
+atte/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi10.pfb><C
+:/Users/Matte/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi
+5.pfb><C:/Users/Matte/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts
+/cm/cmmi6.pfb><C:/Users/Matte/AppData/Local/Programs/MiKTeX/fonts/type1/public/
+amsfonts/cm/cmmi7.pfb><C:/Users/Matte/AppData/Local/Programs/MiKTeX/fonts/type1
+/public/amsfonts/cm/cmmi8.pfb><C:/Users/Matte/AppData/Local/Programs/MiKTeX/fon
+ts/type1/public/amsfonts/cm/cmmi9.pfb><C:/Users/Matte/AppData/Local/Programs/Mi
+KTeX/fonts/type1/public/amsfonts/cm/cmr10.pfb><C:/Users/Matte/AppData/Local/Pro
+grams/MiKTeX/fonts/type1/public/amsfonts/cm/cmr7.pfb><C:/Users/Matte/AppData/Lo
+cal/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr8.pfb><C:/Users/Matte/App
+Data/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr9.pfb><C:/Users/Ma
+tte/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmssbx10.pfb><
+C:/Users/Matte/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cms
+y10.pfb><C:/Users/Matte/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfon
+ts/cm/cmsy7.pfb><C:/Users/Matte/AppData/Local/Programs/MiKTeX/fonts/type1/publi
+c/amsfonts/cm/cmsy8.pfb><C:/Users/Matte/AppData/Local/Programs/MiKTeX/fonts/typ
+e1/public/amsfonts/cm/cmti10.pfb><C:/Users/Matte/AppData/Local/Programs/MiKTeX/
+fonts/type1/public/amsfonts/cm/cmti7.pfb><C:/Users/Matte/AppData/Local/Programs
+/MiKTeX/fonts/type1/public/amsfonts/cm/cmti9.pfb>
+Output written on af.pdf (10 pages, 320850 bytes).
 PDF statistics:
- 129 PDF objects out of 1000 (max. 8388607)
+ 131 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
  13 words of extra memory for PDF output out of 10000 (max. 10000000)
 

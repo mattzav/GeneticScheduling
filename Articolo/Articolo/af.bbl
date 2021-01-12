@@ -12,6 +12,12 @@ Aarts E, Aarts EH, Lenstra JK (2003) \emph{Local search in combinatorial
 Agnetis A, Billaut JC, Gawiejnowicz S, Pacciarelli D, Soukhal A (2014)
   \emph{Multiagent scheduling: Models and algorithms} (Springer).
 
+\bibitem[{Agnetis et~al.(2009)Agnetis, de~Pascale, \protect\BIBand{}
+  Pacciarelli}]{agnetis2009}
+Agnetis A, de~Pascale G, Pacciarelli D (2009) A lagrangian approach to
+  single-machine scheduling problems with two competing agents. \emph{Journal
+  of Scheduling} 12(4):401--415.
+
 \bibitem[{Agnetis et~al.(2004)Agnetis, Mirchandani, Pacciarelli,
   \protect\BIBand{} Pacifici}]{agnetis04}
 Agnetis A, Mirchandani PB, Pacciarelli D, Pacifici A (2004) Scheduling problems
@@ -30,10 +36,6 @@ Avolio M, Fuduli A (2020) A subset-sum type formulation of a two-agent
 \bibitem[{Baker \protect\BIBand{} Smith(2003)}]{baker2003}
 Baker K, Smith J (2003) A multiple-criterion model for machine scheduling.
   \emph{Journal of Scheduling} 6(1):7--16.
-
-\bibitem[{Croes(1958)}]{2-opt}
-Croes GA (1958) A method for solving traveling-salesman problems.
-  \emph{Operations Research} 6(6):791--812.
 
 \bibitem[{Deep \protect\BIBand{} Mebrahtu(2011)}]{tsp3}
 Deep K, Mebrahtu H (2011) New variations of order crossover for travelling
