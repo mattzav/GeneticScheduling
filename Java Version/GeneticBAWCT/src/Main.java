@@ -1,5 +1,6 @@
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -24,11 +25,12 @@ public class Main {
 	static double[] mutationProbabilityArray = { 0.8 };
 	static int[] initMethodArray = { 2 };
 	static int[] selectionMethodArray = { 1 };
-	static int[] crossoverMethodArray = { 0, 1, 2, 3 };
-	static int[] mutationMethodArray = { 0, 1, 2, 3, 4, 5 };
+	static int[] crossoverMethodArray = { 2 };
+	static int[] mutationMethodArray = { 4 };
 
 	static Scanner scanner_input;
 	static Scanner scanner_output;
+	static FileWriter writeSol;
 
 	static int populationSize;
 	static double mutationProbability, crossoverProbability;
@@ -53,33 +55,33 @@ public class Main {
 	static int mutationParam;
 	//
 
-	public static void main(String[] args) throws FileNotFoundException {
+	public static void main(String[] args) throws IOException {
 		r = new Random();
 		r.setSeed(1);
 
-		double numInstances = 20;
+		double numInstances = 50;
 
 		for (int crossoverProbabilityIndex = 0; crossoverProbabilityIndex < crossoverProbabilityArray.length; crossoverProbabilityIndex++)
 			for (int mutationProbabilityIndex = 0; mutationProbabilityIndex < mutationProbabilityArray.length; mutationProbabilityIndex++)
 				for (int populationIndex = 0; populationIndex < populationSizeArray.length; populationIndex++)
 					for (int initMethodIndex = 0; initMethodIndex < initMethodArray.length; initMethodIndex++)
-						for (int crossoverMethodIndex = 0; crossoverMethodIndex < crossoverMethodArray.length; crossoverMethodIndex++)
-							for (int mutationMethodIndex = 0; mutationMethodIndex < mutationMethodArray.length; mutationMethodIndex++)
+						for (int mutationMethodIndex = 0; mutationMethodIndex < mutationMethodArray.length; mutationMethodIndex++)
+							for (int crossoverMethodIndex = 0; crossoverMethodIndex < crossoverMethodArray.length; crossoverMethodIndex++)
 								for (int selectionMethodIndex = 0; selectionMethodIndex < selectionMethodArray.length; selectionMethodIndex++) {
 
 									initOutParameters(populationIndex, crossoverProbabilityIndex,
 											mutationProbabilityIndex, initMethodIndex, selectionMethodIndex,
 											crossoverMethodIndex, mutationMethodIndex);
 
-									createExcelFile();
+//									createExcelFile();
 									int rowExcel = 1;
 
-									for (nA = 50; nA <= 250; nA += 50) {
-										for (nB = nA; nB <= nA; nB += 50) {
+									for (nA = 10; nA <= 40; nA += 10) {
+										for (nB = nA; nB <= nA+20; nB += 10) {
+											createFileToSaveSol();
 
 											scanner_input = new Scanner(
-													new File("src\\Dataset\\BigInterval\\" + nA + "_" + nB + ".txt"));
-											System.out.println(nA + " " + nB);
+													new File("src\\Dataset\\" + nA + "_" + nB + ".txt"));
 											double totalTime = 0, totalObjVal = 0;
 											double totalIter = 0;
 											for (int scenario = 0; scenario < numInstances; scenario++) {
@@ -105,7 +107,6 @@ public class Main {
 														totalIter++;
 														Individual[] next_population = new Individual[populationSize];
 														indexBestChildren = -1;
-
 														for (int j = 0; j < populationSize; j++) {
 
 															Individual[] parents;
@@ -136,8 +137,9 @@ public class Main {
 																	child = positionBasedCrossover(parents);
 																else
 																	throw new RuntimeException("crossover not found");
-															} else
+															} else {
 																child = new Individual(parents[0]);
+															}
 
 															// END CROSSOVER
 
@@ -209,6 +211,7 @@ public class Main {
 												}
 												totalTime += System.currentTimeMillis() - start;
 												totalObjVal += UB;
+												saveOptimum();
 
 											}
 
@@ -217,14 +220,25 @@ public class Main {
 											double avgIter = totalIter / numInstances;
 
 											// SCRIVERE I RISULTATI SU FILE
-											System.out.println("nA = " + nA + " nB = " + nB + " obj = " + avgObj
-													+ " time = " + avgTime + " iter" + avgIter);
-											addValueToExcel(rowExcel++, avgObj, avgTime, avgIter);
+											System.out.println(initParam + " nA = " + nA + " nB = " + nB + " obj = "
+													+ avgObj + " time = " + avgTime + " iter" + avgIter);
+//											addValueToExcel(rowExcel++, avgObj, avgTime, avgIter);
+											writeSol.close();
+
 										}
 									}
-									closeExcelFile();
+//									closeExcelFile();
 
 								}
+	}
+
+	private static void saveOptimum() throws IOException {
+		writeSol.write(best.getSolToString() + "\n");
+	}
+
+	private static void createFileToSaveSol() throws IOException {
+		writeSol = new FileWriter("src\\Solutions\\" + nA + "_" + nB + ".txt");
+
 	}
 
 	private static void addValueToExcel(int excelRow, double fo, double time, double i) {
@@ -265,9 +279,7 @@ public class Main {
 
 	private static void createExcelFile() {
 		try {
-			String path = EXCEL_FILE_LOCATION + "PSize = " + populationSize + " CProb = " + crossoverProbability
-					+ " MProb = " + mutationProbability + " Init = " + initParam + " Sel = " + selectionParam
-					+ " Cross = " + crossoverParam + " Mut = " + mutationParam + ".xls";
+			String path = EXCEL_FILE_LOCATION + "Big\\2.xls";
 			System.out.println("\n \n");
 			System.out.println("-----------------------------------");
 			System.out.println("PATH = " + path);
@@ -318,8 +330,11 @@ public class Main {
 		if (child.getObjF() <= UB) {
 			indexBestChildren = pos;
 			UB = child.getObjF();
-			if (UB <= Math.pow(10, -6))
+			if (UB <= Math.pow(10, -6)) {
+				best = child;
 				optimumFound = true;
+
+			}
 		}
 
 	}
@@ -630,57 +645,62 @@ public class Main {
 			Individual current = new Individual(nA + nB);
 
 			double currSumA = 0, currSumB = 0, cumulative = 0, totalSum = pSum;
+			int indexA = 0;
+			int indexB = 0;
 
 			for (int j = 0; j < nA / 2 + nB / 2; j++) {
-				if ((j % 2 == 0 && j + 1 < nA) || j >= nB) {
-					double case1SumA = currSumA + totalSum * w[_1_nA.get(j + 1)]
-							+ (cumulative + p[_1_nA.get(j)]) * w[_1_nA.get(j)];
+				if ((j % 2 == 0 && indexA + 1 < nA) || indexB + 1 > nB) {
+					double case1SumA = currSumA + totalSum * w[_1_nA.get(indexA + 1)]
+							+ (cumulative + p[_1_nA.get(indexA)]) * w[_1_nA.get(indexA)];
 
-					double case2SumA = currSumA + totalSum * w[_1_nA.get(j)]
-							+ (cumulative + p[_1_nA.get(j + 1)]) * w[_1_nA.get(j + 1)];
+					double case2SumA = currSumA + totalSum * w[_1_nA.get(indexA)]
+							+ (cumulative + p[_1_nA.get(indexA + 1)]) * w[_1_nA.get(indexA + 1)];
 
 					if (Math.abs(case1SumA / nA - currSumB / nB) < Math.abs(case2SumA / nA - currSumB / nB)) {
-						current.setJob(j, _1_nA.get(j));
-						current.setJob(nA + nB - 1 - j, _1_nA.get(j + 1));
+						current.setJob(j, _1_nA.get(indexA));
+						current.setJob(nA + nB - 1 - j, _1_nA.get(indexA + 1));
 
 						currSumA = case1SumA;
 
-						cumulative += p[_1_nA.get(j)];
-						totalSum -= p[_1_nA.get(j + 1)];
+						cumulative += p[_1_nA.get(indexA)];
+						totalSum -= p[_1_nA.get(indexA + 1)];
 					} else {
-						current.setJob(j, _1_nA.get(j + 1));
-						current.setJob(nA + nB - 1 - j, _1_nA.get(j));
+						current.setJob(j, _1_nA.get(indexA + 1));
+						current.setJob(nA + nB - 1 - j, _1_nA.get(indexA));
 
 						currSumA = case2SumA;
 
-						cumulative += p[_1_nA.get(j + 1)];
-						totalSum -= p[_1_nA.get(j)];
+						cumulative += p[_1_nA.get(indexA + 1)];
+						totalSum -= p[_1_nA.get(indexA)];
 					}
+					indexA += 2;
 
-				} else if (j % 2 == 1) {
-					double case1SumB = currSumB + totalSum * w[nA_n.get(j)]
-							+ (cumulative + p[nA_n.get(j - 1)]) * w[nA_n.get(j - 1)];
+				} else {
 
-					double case2SumB = currSumB + totalSum * w[nA_n.get(j - 1)]
-							+ (cumulative + p[nA_n.get(j)]) * w[nA_n.get(j)];
+					double case1SumB = currSumB + totalSum * w[nA_n.get(indexB + 1)]
+							+ (cumulative + p[nA_n.get(indexB)]) * w[nA_n.get(indexB)];
+
+					double case2SumB = currSumB + totalSum * w[nA_n.get(indexB)]
+							+ (cumulative + p[nA_n.get(indexB + 1)]) * w[nA_n.get(indexB + 1)];
 
 					if (Math.abs(case1SumB / nB - currSumA / nA) < Math.abs(case2SumB / nB - currSumA / nA)) {
-						current.setJob(j, nA_n.get(j - 1));
-						current.setJob(nA + nB - 1 - j, nA_n.get(j));
+						current.setJob(j, nA_n.get(indexB));
+						current.setJob(nA + nB - 1 - j, nA_n.get(indexB + 1));
 
 						currSumB = case1SumB;
 
-						cumulative += p[nA_n.get(j - 1)];
-						totalSum -= p[nA_n.get(j)];
+						cumulative += p[nA_n.get(indexB)];
+						totalSum -= p[nA_n.get(indexB + 1)];
 					} else {
-						current.setJob(j, nA_n.get(j));
-						current.setJob(nA + nB - 1 - j, nA_n.get(j - 1));
+						current.setJob(j, nA_n.get(indexB + 1));
+						current.setJob(nA + nB - 1 - j, nA_n.get(indexB));
 
 						currSumB = case2SumB;
 
-						cumulative += p[nA_n.get(j)];
-						totalSum -= p[nA_n.get(j - 1)];
+						cumulative += p[nA_n.get(indexB + 1)];
+						totalSum -= p[nA_n.get(indexB)];
 					}
+					indexB += 2;
 
 				}
 			}

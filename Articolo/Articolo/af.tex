@@ -64,7 +64,7 @@
 \usepackage[english]{babel}       
 \usepackage[ruled,vlined]{algorithm2e}
 \usepackage{tikz}
-
+\usepackage[flushleft]{threeparttable}
 
 %\textwidth=18.5 cm 
 
@@ -116,7 +116,7 @@
 % Full title. Sample:
 % \TITLE{Bundling Information Goods of Decreasing Value}
 % Enter the full title:
-\TITLE{Balancing the average weighted completion times in a scheduling problem with two classes of jobs: a genetic algorithm-based heuristics. }
+\TITLE{Balancing the average weighted completion times in a scheduling problem with two classes of jobs: a genetic algorithm-based heuristics. (memetic algorithm?) }
 
 % Block of authors and their affiliations starts here:
 % NOTE: Authors with same affiliation, if the order of authors allows,
@@ -128,8 +128,8 @@
 % Enter all authors
 } % end of the block
 
-\ABSTRACT{Balancing the average weighted completion times among two classes of jobs (BAWCT) could be interpreted as a cooperative multiagent scheduling problem. BAWCT was introduced in \cite{av-fud20} and it was explored in [2] where the authors proved its NP-hardness, providing a Lagrangian relaxation based approach for solving it heuristically. Since their approach requires to solve, at each iteration, a Linear Programming problem that it's not a very difficult task but however requires some computational time, in this work we propose a genetic algorithm-based heuristics to speed up the resolution process.\\
-Numerical results are presented on the same datasets used in literature to empirically show the efficiency of the proposed approach. }
+\ABSTRACT{Balancing the average weighted completion times among two classes of jobs (BAWCT) could be interpreted as a cooperative multiagent scheduling problem. BAWCT was first introduced in \cite{av-fud20} and it was explored in [2] where the authors proved its NP-hardness, providing a Lagrangian relaxation based approach for solving it heuristically. Since their approach requires to solve, at each iteration, a Linear Programming problem that it's not a very difficult task but however requires some computational time, in this paper we propose a genetic algorithm-based heuristics to speed up the resolution process.\\
+Numerical results are presented on the same datasets used in literature to empirically show the efficiency of the new proposed approach. }
 %
 
 % Sample
@@ -157,21 +157,21 @@ Numerical results are presented on the same datasets used in literature to empir
 
 % Text of your paper here
 \section{Introduction}
-Allocating resources to tasks over given time periods with the aim of optimizing one or more objectives is what the theory of scheduling focus on. Scheduling, as a decision making process, plays a very important role in a lot of contexts such as manufacturing, production, transportation, and distribution (see as references \cite{pinedo09,pinedo16}). Unfortunately solving this kind of problems often is not easy and, however, it depends on the assumptions made on the problems themselves.\\
+Allocating resources to tasks over given time periods with the aim of optimizing one or more objectives is what the theory of scheduling focuses on. Scheduling, as a decision making process, plays a very important role in a lot of contexts such as manufacturing, production, transportation, and distribution (see as references \cite{pinedo09,pinedo16}). Unfortunately solving this kind of problems often is not easy and, however, it depends on the assumptions made on the problems themselves.\\
 In the first years of the century, with publication of \cite{agnetis04} and \cite{baker2003}, a new scheduling model was introduced to take into account the presence of two or more agents. In multiagent scheduling problems (see \cite{agnetis-book14}) each agent has its own set of tasks to be processed and its own objective function to be optimized, then the difficulty of this kind of problems arises from the fact that the agents share the processing resources.\\
 \cite{agnetis04}, in a two-agent context, addresses the problem by considering as objective functions to optimize the maximum of regular functions (associated with each job), number of late jobs, and total weighted completion times. Additionally, the authors studied the complexity of each problem with respect to the different objective function and to the different structure of the processing system (single machine or shop).\\
 \cite{baker2003}, instead, in a multiagent context, faces the problem of minimizing three different objective functions: makespan, maximum lateness, and total weighted completion time. From a complexity view point, the authors proved the problem to be polynomial solvable according to any one of the three mentioned criteria but, additionally, they shown that when minimizing a mix of them, the problem becomes NP-hard. \\
 The multiagent assumptions find also application in a lot of practical contexts. For example, \cite{Peha95} addresses the problem of minimizing the weighted number of tardy jobs in a real-time systems and integrated-services networks, while \cite{Arbib04}, in a  telecommunication system with two users, focuses on the maximization of on‐time data packets transmitted to one user, while guaranteeing a certain amount of on‐time data packets to the other.\\
- The majority of multiagent scheduling problems is of competitive type since agents purely compete with each other to allocate resources to their tasks that only contribute to their own objective function.\\ In this work, instead, we tackle a scheduling problem which could be interpreted as a two agents problem of cooperative type since each job contributes to the same objective function aimed at balancing the average weighted completion times of the two agents.\\
-This problem finds application in a lot of scenarios characterized by a decision maker who, for different reasons (e.g. economic, of efficiency, of reliability), wishes to balance the average completion times of two different classes of jobs. Let’s consider, for example, a transportation firm using a drone for delivering packages and suppose that the drone is able to deliver only one package at time, i.e. it has to come back to the depot after each delivery in order to take the next package. Suppose, finally, that the transportation firm has to stock two different companies. In this scenario, the processing times represent the shipping times whose depend on the depot-company distance (fixed) and on the load of the corresponding cargo (variable), the latter acting on the speed of the drone, while the weight associated with each job could be, for example, the urgency specified by a company for that package.\\ From the point of view of the transportation firm, it’s reasonable to schedule deliveries in order to balance the average weighted time of the two companies. \\
-This problem was introduced in \cite{av-fud20} where the authors considered its basic version, by assuming all the jobs having the same processing time and unitary weight. In [speriamo] the problem was generalized by considering all the jobs having different processing time and weight. Unfortunately, for the generalized version of the problem, the authors proved its NP-hardness, providing a Lagrangian relaxation based algorithm to solve it heuristically. Since their approach requires, at each iteration, to solve a Linear Programming problem that it's not too hard but it requires some computational time, in this work we propose a genetic algorithm based heuristics to speed up the resolution process.\\
-This work is organized as follows. In the next section we formally state the problem, reporting a nonsmooth formulation as a variant of the quadratic assignment problem, and we provide the state-of-the-art results for it. In Section 3 we propose a genetic algorithm based approach to heuristically solve the problem, describing in detail all the phases of our approach. In Section 4 we present some numerical results obtained on the same datasets considered in literature to empirically show the efficiency of the proposed algorithm and we conclude with Section 6 in which some conclusions are drawn.
+ The majority of multiagent scheduling problems is of competitive type since agents purely compete with each other to allocate resources to their tasks that only contribute to their own objective function.\\ In this work, instead, we tackle a scheduling problem which could be interpreted as a two agents problem of \textit{cooperative} type since each job contributes to the same objective function aimed at balancing the average weighted completion times of the two agents.\\
+This problem finds application in a lot of scenarios characterized by a decision maker who, for different reasons (e.g. economic, of efficiency, of reliability), wishes to balance the average completion times of two different classes of jobs. Let’s consider, for example, a transportation firm using a drone for delivering packages and suppose that the drone is able to deliver only one package at time, i.e. it has to come back to the depot after having performed each delivery in order to take the next package. Suppose, finally, that the transportation firm has to stock two different companies. In this scenario, the processing times represent the shipping times whose depend on the depot-company distance (fixed) and on the load of the corresponding cargo (variable), the latter acting on the speed of the drone, while the weight associated with each job could be, for example, the urgency specified by a company for that package.\\ From the point of view of the transportation firm, it’s reasonable to schedule deliveries in order to balance the average weighted time of the two companies. \\
+This problem was introduced in \cite{av-fud20} where the authors considered its basic version, by assuming all the jobs having the same processing time and unitary weight. In [2] the problem was generalized by considering all the jobs having different processing time and weight. Unfortunately, for the generalized version of the problem, the authors proved its NP-hardness, providing a Lagrangian relaxation based algorithm to solve it heuristically. Since their approach requires, at each iteration, to solve a Linear Programming problem that it's not so hard but it requires some computational time, in this work we propose a genetic algorithm based heuristics to speed up the resolution process.\\
+This work is organized as follows. In the next section we formally state the problem, reporting a nonsmooth formulation as a variant of the quadratic assignment problem, and we provide the state of the art results for it. In Section 3 we propose a genetic algorithm based approach to heuristically solve the problem, describing in detail all the phases of our approach. In Section 4 we present some numerical results obtained on the same datasets considered in literature to empirically show the efficiency of the proposed algorithm and we conclude with Section 5 in which some conclusions are drawn.
 \section{Problem Definition and Literature Review}
 Let $A$ and $B$ be two different classes of jobs with $n_A$ and $n_B$ being their cardinalities. Let $J_A = \{1,\ldots,n_A\}$ and $J_B = \{n_A+1,\ldots,n_A+n_B\}$ be the index sets of $A$ and $B$, respectively. For each job $j \in J_A \cup J_B$, let $p_j$ be its processing time and $w_j$ its weight.\\
-The problem of balancing the average weighted completion times (BAWCT)[2] of class $A$ and $B$ can be stated as follows:
+The problem of balancing the average weighted completion times (BAWCT)[2] of classes $A$ and $B$ can be stated as follows:
 \be \label{BAWCT}\min \left|\frac{\sum_{j \in J_A} C_jw_j}{n_A}-\frac{\sum_{j \in J_B} C_jw_j}{n_B}\right|,\ee where $C_j$ represents the completion time of job $j$.
 From a mathematical programming point of view, in order to formulate BAWCT as an optimization problem, we proceed as follows.
-We define the following decision variables:
+We define the following binary decision variables:
 $$x_{jt}\pdef\left\{\ba{ll} 
 1 & \mbox{ if job } j \mbox{ is assigned to position }t\\
 0 & \mbox{ otherwise,} 
@@ -198,10 +198,10 @@ x_{jt}\in\{0,1\} \quad j \in J, \quad t=1\ldots n_A+n_B,
 \ee
 where the constraints are the classical assignment constraints, which impose a bijection between jobs and positions. 
 Problem \refe{qap} is a nonsmooth integer optimization problem and represents a sort of quadratic assignment problem due to the quadratic terms in the objective function. In [2] the authors, after having proved its NP-hardness, provided an integer linearization of \refe{qap} based on the well known Glover Linearization and then they heuristically solved the linearized version using a Lagrangian relaxation based approach. The limit of their technique, even if the obtained results are valuable, consists on the fact that, at each iteration, a Linear Programming problem has to be solved. It's well known that it can be done in polynomial time but, when the size of the problem increases (i.e. $n_A$ and $n_B$ become very large), its resolution has a not negligible impact on the overall computational time. For this reason, in the next section, we propose a genetic algorithm-based heuristics that, from the empirical results, has proved to be able to speed up the resolution process.\\
-It's worth noting that, in \cite{av-fud20}, the authors tackled a simplified version of BAWCT in which they assumed, for $j=1,\ldots,n_A+n_B$, $w_j=1$ and $p_j=p$. They proved that, by mean of these assumptions, the problem reduces to a particular instance of the well known subset sum and it becomes solvable in linear time, or constant time if the job-position assignment is not explicitly considered.
-\section{A Genetic Algorithm Heuristics}
+It's worth noting that, in \cite{av-fud20}, the authors tackle a simplified version of BAWCT in which they assume, for $j=1,\ldots,n_A+n_B$, $w_j=1$ and $p_j=p$. They proved that, by mean of these assumptions, the problem reduces to a particular instance of the well known subset sum and it becomes solvable in linear time, or constant time if the job-position assignment is not explicitly considered.
+\section{A Genetic Algorithm}
 Genetic Algorithms (GAs) are heuristic search approaches successfully applied to many NP-hard optimization problems (see \cite{kramer}). GAs follow the evolution paradigm, i.e. starting from an initial population, they apply genetic operators in order to produce offsprings, trying to make them fitter than their ancestors, hopefully increasing the overall fitness of the population from one generation to another.\\
-In GAs setting, a genotype representing a possible solution to the optimization problem and a fitness value representing its "goodness" correspond to each individual ; this is the reason why, from one generation to another, GAs wish to generate new individuals with higher fitness values.\\
+In GAs setting, to each individual correspond a genotype representing a possible solution to the optimization problem and a fitness value representing its "goodness"; this is the reason why, passing from one generation to another, GAs wish to generate new individuals with higher fitness values.\\
 The	basic schema of GAs is reported in Algorithm \ref{algo}.\\
 \begin{algorithm} \label{algo}
 	\SetAlgoLined
@@ -217,9 +217,8 @@ The	basic schema of GAs is reported in Algorithm \ref{algo}.\\
 	}
 	\caption{Genetic Algorithm}
 \end{algorithm}
-\noindent Even if in literature there are plenty of suggestions about how to implement all the phases of Algorithm \ref{algo}, in general each of them can be adapted and tailored to the problem dealing with; this flexibility makes GAs attractive for many optimization problems in practice. For example in \cite{tsp1,tsp2,tsp3} the well-known traveling salesman problem is faced, while in \cite{sched1,sched3} the authors, in a scheduling context, applied this technique to flow-shop and job-shop problems with the aim of minimizing the makespan.
-Before to describe in detail how we implemented each phase of Algorithm \ref{algo}, its worth to specify some additional steps we performed. In particular, after having mutated the current child, we apply a local search to improve its fitness value. Additionally, at each generation, we completely replace the old population with the new one, just mantaining the fittest current individual in order to have a monotonic behaviour of the overall fitness. These steps are used quite always in GAs in order to have a faster convergence to optimal solutions.\\
-Finally, as exit conditions, we used a time limit of 1800 seconds like in [2]. Of course, we stop the execution also if a null upper bound is found since, by the definition of \refe{BAWCT}, it trivially corresponds to an optimal solution for BAWCT.\\ 
+\noindent Even if in literature there are plenty of suggestions about how to implement all the phases of Algorithm \ref{algo}, in general each of them can be adapted and tailored to the problem dealing with; this flexibility makes GAs attractive for many optimization problems in practice. For example in \cite{tsp1, tsp2} and \cite{tsp3} the well-known traveling salesman problem is faced, while in \cite{sched1} and \cite{sched3} the authors, in a scheduling context, applied this technique to flow-shop and job-shop problems with the aim of minimizing the makespan.
+Before to describe in detail how we implemented each phase of Algorithm \ref{algo}, its worth to specify some additional steps we performed. In particular, after having mutated the current child, we apply a local search to improve its fitness value. Additionally, at each generation, we completely replace the old population with the new one, just mantaining the fittest current individual in order to preserve a monotonic behaviour of the overall fitness. These steps are very common in GAs since they help to obtain a faster convergence towards optimal solutions.
 \subsection{Encoding and Fitness Evaluation}
 The first step in the implementation of a GA regards the choice of a suitable encoding for solutions. Since we are dealing with a scheduling problem, the standard way to represent a solution is an ordered vector of values.\\
 Given a solution $S$, we encode it in a vector $V_S$ of size $n_A+n_B$ such that $V_S[t] = j$ if and only if job $j$ is scheduled in position $t$ within the solution $S$. Then, from now on, when the referenced solution is clear, we denote by $[t]$ the job processed in position $t$.\\
@@ -252,7 +251,7 @@ Let $P(N_A)$ and $P(N_B)$ be two permutations of $N_A$ and $N_B$, respectively.
 At each step $i$ we set either \be \label{eq1}[i] = P(N_C)_{t_C} \mbox{ and } [n_A+n_B-i] = P(N_C)_{{t_C}+1}\ee or \be \label{eq2}[i] = P(N_C)_{{t_C}+1} \mbox{ and } [n_A+n_B-i] = P(N_C)_{t_C},\ee
 where the class $C$ is swapped between $A$ and $B$ at each step, while the index $t_C$, initialized to $1$, is increased by 2 after that two jobs of class $C$ are scheduled.
  Following a greedy approach, among \refe{eq1} and \refe{eq2}, the assignment currently minimizing \refe{BAWCT} is chosen.\\
- It's worth to specify that, if during the process one of the two classes is completely scheduled, $C$ remains fixed to the other class. Also, eventually remaining jobs due to the \textbf{oddness} of $n_A$ and $n_B$, are scheduled in the middle of the sequence in a greedy way taking into account \refe{BAWCT}.
+ If during the process one of the two classes is completely scheduled, $C$ remains fixed to the other class. Also, eventually remaining jobs, due to the fact that $n_A$ and $n_B$ could be both odd, are scheduled in the middle of the sequence in a greedy way taking into account \refe{BAWCT}.
 \end{itemize}
 	It's worth noting that, for all the proposed techniques, the probability of getting two times the same schedule as output of the generation process is very low, since they are defined in function of permutations. This is crucial, in particular for the last two techniques, since it guarantees a \textit{diversification} in the initial population, even if the same greedy procedure is used for generating each individual.
 
@@ -266,12 +265,12 @@ In this work, we tested three different well-known selection techniques: \textit
 \end{itemize}
 \subsection{Crossover}
 Once parents are selected, they have to reproduce in order to generate new children. The reproduction process is simulated using crossover operators, aimed at creating a new individual whose features depend on both the parents by mixing their genetic properties. From an algorithmic point of view, this phase is crucial since it allows to navigate the solution space. \\
-In literature a lot of crossover operators were proposed for scheduling problems and, in general, for sequencing problems like the well-known traveling salesman problem (for a general overview see \cite{cross1}). However, in \cite{sched1}, the authors noticed that crossover operators mainly proposed for traveling salesman problems don't perform very well in a scheduling context. Then, on the basis of their results, we implemented the following crossover operators: \textit{One-point crossover}, \textit{Two-point crossover Ver. I}, \textit{Two-point crossover Ver. II}, \textit{Position based crossover}, and, additionally, we defined a new crossover operator named \textit{k-AlternateCrossover.} (which it turned out to be very effective o eventualmente toglierlo(?)) (inserire figure?)\\
+In literature a lot of crossover operators were proposed for scheduling problems and, in general, for sequencing problems like the well-known traveling salesman problem (for a general overview see \cite{cross1}). However, in \cite{sched1}, the authors noticed that crossover operators mainly proposed for traveling salesman problems don't perform very well in a scheduling context. Then, on the basis of their results, we implemented the following crossover operators: \textit{One-point crossover}, \textit{Two-point crossover Ver. I}, \textit{Two-point crossover Ver. II} and \textit{Position based crossover}.\\
 Given two parents $I_1$ and $I_2$, the previous crossover operators can be described as follows: 
 \begin{itemize}
-	\item \textit{One-point crossover.} One point $i \in [1,n_A+n_B]$ is randomly selected. Then, with the same probability, either the first $i$ jobs or the last $i$ ones are inherited from $I_1$, while the remaining $n_A+n_B-i$ are inserted in the sequence preserving the order of appearance they have in $I_2$. 
-	\item \textit{Two-point crossover Ver. I.} Two points $i,j \in [1,n_A+n_B]$ are randomly selected. Suppose $i \le j$, the first $i$ jobs and the last $n_A+n_B-j$ ones are inherited from $I_1$, while the remaining $j-i$, exactly as in one-point crossover, are inserted in the sequence preserving the order they have in $I_2$.
-	\item \textit{Two-point crossover Ver. II.} Two points $i,j \in [1,n_A+n_B]$ are randomly selected. Suppose $i \le j$, from position $i$ to $j$ the jobs are inherited from $I_1$, while the remaining jobs, following the same policy of one-point crossover, are inserted preserving the order they have in $I_2$.
+	\item \textit{One-point crossover.} One point $i \in [1,n_A+n_B]$ is randomly selected. Then, with the same probability, either the first $i$ jobs or the last $n_A+n_B-i$ ones are inherited from $I_1$, while the remaining ones are inserted in the sequence preserving the order of appearance they have in $I_2$. 
+	\item \textit{Two-point crossover (Version I).} Two points $i,j \in [1,n_A+n_B]$ are randomly selected. Suppose $i \le j$, the first $i$ jobs and the last $n_A+n_B-j$ ones are inherited from $I_1$, while the remaining $j-i$, exactly as in one-point crossover, are inserted in the sequence preserving the order they have in $I_2$.
+	\item \textit{Two-point crossover (Version II).} Two points $i,j \in [1,n_A+n_B]$ are randomly selected. Suppose $i \le j$, from position $i$ to $j$ the jobs are inherited from $I_1$, while the remaining jobs, following the same policy of one-point crossover, are inserted preserving the order they have in $I_2$.
 	\item \textit{Position based crossover.} First of all, a number of positions $k \in [1,n_A+n_B]$ is randomly selected, then $k$ different values $v_i$, $i=1,\ldots,k$, are sampled in the interval $[1,n_A+n_B].$ At this point the jobs in positions $v_i$, for $i=1,\ldots,k$, are inherited from $I_1$, while the others, following the same idea of one-point crossover, are inserted preserving the order they have in $I_2$.
 \end{itemize}
 \subsection{Mutation}
@@ -279,9 +278,9 @@ Another important operator in GAs is mutation, strictly related to crossover sin
 Inspired by \cite{sched1}, in this work we tested the following four mutation operators:
 \begin{itemize}
 	\item \textit{Adjacent two-job change.} A position $i \in [1,n_A+n_B-1]$ is randomly selected and jobs in position $i$ and $i+1$ are swapped.
-	\item \textit{Arbitrary two-job change.} Two different positions $i,j \in [1,n_A+n_B]$ are randomly selected and jobs in position $i$ and $j$ are swapped.
-	\item \textit{Arbitrary three-job change.} Three different positions $i,j,k \in [1,n_A+n_B]$ are randomly selected and the corresponding jobs are swapped by setting at the same time: $[j] = [i]$, $[k] = [j]$, and $[i] = [k]$. 
-	\item \textit{Shift change.} Two different positions $i,j \in [1,n_A+n_B]$ are randomly selected and job in position $i$ is moved in position $j$ by shifting all the intermediate jobs.
+	\item \textit{Arbitrary two-job change.} Two positions $i,j \in [1,n_A+n_B]$ are randomly selected and jobs in position $i$ and $j$ are swapped.
+	\item \textit{Arbitrary three-job change.} Three positions $i,j,k \in [1,n_A+n_B]$ are randomly selected and the corresponding jobs are swapped by setting at the same time: $[j] = [i]$, $[k] = [j]$, and $[i] = [k]$. 
+	\item \textit{Shift change.} Two positions $i,j \in [1,n_A+n_B]$ are randomly selected and job in position $i$ is moved in position $j$ by shifting all the intermediate jobs.
 \end{itemize} 
 Additionaly, by considering a set of adjacent jobs as an (atomic) \textit{batch}, we defined other two mutation operators:
 \begin{itemize}
@@ -289,112 +288,115 @@ Additionaly, by considering a set of adjacent jobs as an (atomic) \textit{batch}
 	\item \textit{Arbitrary batch change.} Two positions $i,j \in [1,n_A+n_B]$ are randomly selected. Suppose $i\le j$, also the batch size $s \in [1, \min\{j-i,n_A+n_B+1-j\}]$ is randomly determined. Then, for $k=0,\ldots,s-1$, jobs in position $i+k$ and $j+k$ are swapped. 
 \end{itemize}
 \subsection{Local Search}
-As already specified in the introduction to our heuristics, in order to improve the fitness of new children, a local search (see for example \cite{local}) is applied immediately after mutation. The introduction of local search in our approach turned out to be very effective in practice since, in a lot of scenarios, starting from a "good" solution produced by the previous phases, it's able to reach an optimal one lying in the neighborhood.\\
-In particular, given an individual $I$ representing a solution $S$, for each of the $\frac{(n_A+n_B)(n_A+n_B-1)}{2}$ couples of indices $(i,j)$, with $i<j$,  we check if by swapping jobs in position $i$ and $j$ we obtain a decrease in the current value of \refe{BAWCT}. If this is the case, we execute the exchange, we update the current value of \refe{BAWCT} and we iterate the process.\\
-It's worth to specify that, in order to evaluate the variation of \refe{BAWCT} for each possible exchange $(i,j)$, it's not necessary to compute afresh its value, since it can be done by a simple procedure iterating in the sequence from position $i$ to position $j$ (see [2]). Even if the overall worst-case complexity for computing the variation of \refe{BAWCT} is however linear ($\mathcal{O}(n_A+n_B)$) also in this case, avoid its recalculation has a not negligible impact on the overall performance.\\
+As already specified in the introduction to our heuristics, in order to improve the fitness of new child, a local search (see for example \cite{local}) is applied immediately after mutation. The introduction of local search in our approach turned out to be very effective in practice since, in a lot of scenarios, starting from a good quality solution produced by the previous phases, it's able to reach an optimal one lying in the neighborhood.\\
+In particular given an individual $I$ representing a solution $S$, for each of the $\frac{(n_A+n_B)(n_A+n_B-1)}{2}$ couples of indices $(i,j)$, with $i<j$,  we check if by swapping jobs in position $i$ and $j$ we obtain a decrease in the current value of \refe{BAWCT}. If this is the case, we execute the exchange, we update the current value of \refe{BAWCT} and we iterate the process (see [2] for more details).\\
+It's worth to specify that, in order to evaluate the variation of \refe{BAWCT} for each possible exchange $(i,j)$, it's not necessary to compute afresh its value, since it can be done by a simple procedure iterating in the sequence from position $i$ to $j$ as already proved in [2]. Even if the overall worst-case complexity for computing the variation of \refe{BAWCT} is however linear ($\mathcal{O}(n_A+n_B)$) also in this case, avoid its recalculation has a not negligible impact on the overall performance.\\
 Concluding, since the number of possible exchanges are quadratics, while the variation of the objective function can be calculated in linear time, the overall complexity of the local search approach is $\mathcal{O}((n_A+n_B)^3)$.
 \section{Numerical Results}
-The proposed algorithm has been implemented in Java (version 14.02) and run on a Windows 10 system, characterized by 16 GB of RAM and a 2.30 GHz Intel Core i7 processor. As in [2], for each run, we have fixed a time limit equal to 1800 seconds and a maximum number $k_{max}$ of iterations equal to ??. Note that, except for the local search, each phase of the proposed approach can be implemented in linear time, making the overall complexity of the algorithm equal to $\mathcal{O}(k_{max}(n_A+n_B)^3)$.\\
+The proposed algorithm has been implemented in Java (version 14.02) and run on a Windows 10 system, characterized by 16 GB of RAM and a 2.30 GHz Intel Core i7 processor. As in [2], for each run, we have fixed a time limit equal to 1800 seconds and a maximum number $k_{max}$ of iterations equal to ??. Of course, we also stop the execution of the algorithm if a null upper bound is found since, by the definition of \refe{BAWCT}, it trivially corresponds to an optimal solution for BAWCT.\\ 
+ Note that, except for the local search, each phase of the proposed approach can be implemented in linear time, making the overall complexity of the algorithm equal to $\mathcal{O}(k_{max}(n_A+n_B)^3)$.\\
 It's well known that, in general, each GA, in addition to the choice of one among the proposed techniques for implementing each phase, needs also values for other three parameters: \textit{population size}, \textit{crossover probability}, and \textit{mutation probability.}\\
 Our idea was to take these values in the following domains:
 \begin{itemize}
-	\item population size $P_s \in \{10,25,50\}$;
+	\item population size $P_s \in \{10,20,50\}$;
 	\item crossover probability $P_c \in \{0.2,0.4,0.6,0.8,1\}$;
 	\item mutation probability $P_m \in \{0.2,0.4,0.6,0.8,1\}$.
 \end{itemize}
-Due to the huge number of possible configurations, we have decided to split our experiments in two phases: in the first one we have done preliminary approximated experiments in order to estimate, in reasonable time, approximately the best configuration for our parameters, while in the second one we have tested our algorithm on the datasets proposed in literature, by setting the parameters on the values obtained in the previous phase.\\
+Due to the huge number of possible configurations for our parameters, we have decided to split our experiments in two phases: in the first one we have done preliminary approximated experiments in order to estimate, in reasonable time, a good quality configuration for our parameters, while in the second one we have tested our algorithm on the datasets proposed in literature, by setting the parameters on the values selected in the previous phase.\\
 Preliminary experiments revealed that a good setting for our algorithm is the following:
 \begin{itemize}
 \item population size: $P_s = 10$;
 \item crossover probability: $P_c = 1$;
 \item mutation probability: $P_m = 0.8$;
-\item initial generation: \textit{Bidirectional};
+\item initial generation: \textit{Bidirectional generation};
 \item selection: \textit{Binary tournment};
-\item crossover: 
-\item  mutation:
+\item crossover: \textit{Two-point crossover (Version II)};
+\item  mutation: \textit{Adjacent batch change};
 \item local search: Yes.
 \end{itemize}
-In order to have a fair comparison with the state of the art results, after the algorithm has been tested on the same datasets used in [2] that mainly consist of three sets of problems, namely \textit{Small}, \textit{Medium}, and \textit{Large}, and of a sets of more challenging instances.\\ For each set of problems, the processing times and the weights are all integers and they are drawn from the uniform distribution in the interval $[1,P_{max}]$, where $P_{max} = 25$ for the small problems, $P_{max}=50$ for the medium problems, $P_{max}=100$ for the large problems, and $P_{max} = 3(n_A+n_B)$ for the more challenging set of problems. Note that, when $P_{max}$ grows, the chances of having two isomorphic jobs (same processing time and weight) decrease, reducing the number of optimal solutions, and making the overall search process harder. This motivates the hardness of the last set of problems.\\    
-For each set of problems, different scenarios have been defined by varying the pair ($n_A$, $n_B$), then, for each of that, 50 instances have been proposed.\\ 
+We have evaluated our approach by comparing our results with the ones obtained in [2] on the same datasets proposed by the authors, that mainly consist of three sets of problems, namely \textit{Small}, \textit{Medium}, and \textit{Large}, and of a sets of more challenging instances.\\ For each set of problems, the processing times and the weights are all integers and they are drawn from the uniform distribution in the interval $[1,P_{max}]$, where $P_{max} = 25$ for the small problems, $P_{max}=50$ for the medium problems, $P_{max}=100$ for the large problems, and $P_{max} = 3(n_A+n_B)$ for the more challenging set of problems. Note that, when $P_{max}$ grows, the chances of having two isomorphic jobs (same processing time and weight) decrease, reducing the number of optimal solutions, and making the overall search process harder. This motivates the hardness of the last set of problems.\\    
+For each set of problems, different scenarios have been defined by varying the pair ($n_A$, $n_B$) and, for each of that, 50 instances have been proposed except for the last set of problems in which each scenario consists of 20 instances.\\ 
 For each scenario, in Table \ref{small},\ref{medium}, \ref{large} and \ref{largex}, we report:
 \begin{itemize}
-\item the value of the pair $(n_A,n_B)$.
-\item the average time required to find an optimal solution;
-\item the average time require by the algorithm proposed in [2] to find an optimal solution.
+\item the value of the pair $(n_A,n_B)$;
+\item the average time, in seconds, required by the algorithm proposed in [2] to find an optimal solution.
+\item the average time, in seconds, required by our new approach to find an optimal solution.
 \end{itemize}
-Numerical experiments shown the efficiency of our approach, that turned out to be always able to find an optimal solution within the time limit and within a maximum number of iterations.\\
-It's worth to underline the importance of the \textit{bidirectional generation} we introduced to produce the initial population. It turned out to be able to provide the algorithm with a good starting point, making the convergence towards an optimal solution easier. In order to show this result, in Table \ref{smallBid},\ref{mediumBid}, \ref{largeBid} and \ref{largexBid}, we report, for each scenario and for each generation technique, the average objective function of the initial population.\\
-Note that, since $P_{max}$ is fixed within each set of problems, we report it only once as caption of the corresponding table.
-
-INSERIRE LE ITERAZIONI E FAR NOTARE CHE IL TEMPO MEDIO é MINORE RISPETTO ALL'ALTRO APPROCCIO O TOGLIERLE DEL TUTTO?
+Numerical experiments have shown the efficiency of our approach, that turned out to be always able to find an optimal solution within the time limit and within the maximum number of iterations. Note also that our algorithm outperform of some order of magnitude the one proposed in [2].\\
+Finally, it's worth to underline the importance of using the new \textit{bidirectional generation} to produce the initial population. In a lot of cases, it turned out to be able to provide the algorithm with a better starting point, making the convergence towards an optimal solution easier.
 
 \begin{table}[h]\scriptsize
 	\begin{center}
-		\begin{tabular}{|| c |c | c|| c||c ||}\hline
+		\begin{tabular}{|| c | c|| c||c ||}\hline
 			
-			\multirow{3}{*}{$n$} & \multirow{3}{*}{$n_A$} & \multirow{3}{*}{$n_B$} & \multirow{3}{*}{Exit(s)} & \multirow{3}{*}{Iter}\\
-			&  &&  & \\
-			&    &    &  &\\\hline
-			$20$	 & \multirow{3}{*}{$10$}   & $10$   &$0,028$  & $19,1$
+			 \multirow{3}{*}{$n_A$} & \multirow{3}{*}{$n_B$} & \multirow{3}{*}{Exit(s) [2]} & \multirow{3}{*}{Exit(s) Our}\\
+			  &&  & \\
+			    &    &  &\\\hline
+		 \multirow{3}{*}{$10$}   & $10$   &$0,028$  & $0,0023$
 			\\
-			$30$  &  & $20$	 & $0,017$
-			&$6,4$
+		 & $20$	 & $0,017$
+			&$0,0004$
 			\\ 
-			$40$  &  & $30$	 & $0,028$
-			&$5,6$
+		  & $30$	 & $0,028$
+			&$0,0004$
 			\\ \hline
 			
-			$40$	 & \multirow{3}{*}{$20$}   & $20$   & $0,028$
-			& $5,7$
+		\multirow{3}{*}{$20$}   & $20$   & $0,028$
+			& $0,0004
+			$
 			\\
-			$50$  &  & $30$	 &$0,08$
-			&$9,6$
+		  & $30$	 &$0,08$
+			&$0,0005
+			$
 			\\ 
-			$60$  &  & $40$	 &$0,068$ &$3,7$\\ \hline
+		 & $40$	 &$0,068$ &$0,0006
+			$\\ \hline
 			
-			$60$	 & \multirow{3}{*}{$30$}   & $30$   &  $0,067$
-			& $3,6$
+			 \multirow{3}{*}{$30$}   & $30$   &  $0,067$
+			& $0,0005
+			$
 			\\
-			$70$  &  & $40$	 &$0,19$
-			&$7$
+			  & $40$	 &$0,19$
+			&$0,0013$
 			\\ 
-			$80$  &  & $50$	 & $0,32$
-			&$7,7$
+		  & $50$	 & $0,32$
+			&$0,0016$
 			\\ \hline
 			
-			$80$	 & \multirow{3}{*}{$40$}   & $40$   &  $0,091$
-			&$2,2$
+		 \multirow{3}{*}{$40$}   & $40$   &  $0,091$
+			&$0,0007$
 			\\
-			$90$  &  & $50$	 & $0,748$
-			&$11,6$
+			  & $50$	 & $0,748$
+			&$0,0024$
 			\\ 
-			$100$  &  & $60$	 & $0,347$
-			&$4,4$
+		 & $60$	 & $0,347$
+			&$0,0013$
 			\\ \hline 
 		\end{tabular}
 	\end{center}
 	\caption{Small test problems, $P_{max}= 25.$} \label{small}
 \end{table}
 
+
 \begin{table}[h]\scriptsize
 	\begin{center}
-		\begin{tabular}{|| c |c | c|| c||c ||}\hline
+		\begin{tabular}{|| c | c|| c||c ||}\hline
 			
-			\multirow{3}{*}{$n$} & \multirow{3}{*}{$n_A$} & \multirow{3}{*}{$n_B$} & \multirow{3}{*}{Exit (s)} & \multirow{3}{*}{Iter}\\
-			&  &&  & \\
-			&    &    &  &\\\hline
-			$100$	 & \multirow{2}{*}{$50$}   & $50$   & $0,416$
-			&$5,5$
+		\multirow{3}{*}{$n_A$} & \multirow{3}{*}{$n_B$} & \multirow{3}{*}{Exit (s)} & \multirow{3}{*}{Exit(s) our}\\
+			 &&  & \\
+			   &    &  &\\\hline
+		 \multirow{2}{*}{$50$}   & $50$   & $0,416$
+			&$ 0,0074 $
 			\\
-			$150$  &  & $100$	 &$0,863$
-			&$3,6$
+			  & $100$	 &$0,863$
+			&$0,0093$
 			\\ \hline
 			
-			$200$	 & \multirow{2}{*}{$100$}   & $100$   & $1,705$
-			&$2,8$
+			 \multirow{2}{*}{$100$}   & $100$   & $1,705$
+			&$0,0135$
 			\\
-			$250$  &  & $150$	 & $6,121$
-			&$4,4$
+		  & $150$	 & $6,121$
+			&$0,0456$
 			\\ \hline
 			
 		\end{tabular}
@@ -405,27 +407,27 @@ INSERIRE LE ITERAZIONI E FAR NOTARE CHE IL TEMPO MEDIO é MINORE RISPETTO ALL'AL
 
 \begin{table}[h]\scriptsize
 	\begin{center}
-		\begin{tabular}{|| c |c | c|| c||c ||}\hline
+		\begin{tabular}{|| c | c|| c||c ||}\hline
 			
-			\multirow{3}{*}{$n$} & \multirow{3}{*}{$n_A$} & \multirow{3}{*}{$n_B$} & \multirow{3}{*}{Exit (s)} & \multirow{3}{*}{Iter}\\
-			&  &&  & \\
-			&    &    & &\\\hline
-			$300$	 & \multirow{2}{*}{$150$}   & $150$   &$14,566$
-			& $5,3$
+			  \multirow{3}{*}{$n_A$} & \multirow{3}{*}{$n_B$} & \multirow{3}{*}{Exit (s)} & \multirow{3}{*}{Exit(s) our}\\
+			 &&  & \\
+		    &    & &\\\hline
+			 \multirow{2}{*}{$150$}   & $150$   &$14,566$
+			& $0,0885$
 			\\
-			$350$  &  & $200$	 &$ 62,988$
-			&$11,7$
+			 & $200$	 &$ 62,988$
+			&$0,5033$
 			\\ \hline
 			
-			$400$	 & \multirow{2}{*}{$200$}   & $200$   &$ 24,737$
-			&$3,2$
+			\multirow{2}{*}{$200$}   & $200$   &$ 24,737$
+			&$0,2818$
 			\\
-			$450$  &  & $250$	 &$135,138$
-			&$11,3$
+			& $250$	 &$135,138$
+			&$1,6327$
 			\\ \hline
 			
-			$500$	 & $250$   & $250$   &  $49,91$
-			&$2,8$
+			 $250$   & $250$   &  $49,91$
+			&$0,2066$
 			\\ \hline
 			
 		\end{tabular}
@@ -433,201 +435,55 @@ INSERIRE LE ITERAZIONI E FAR NOTARE CHE IL TEMPO MEDIO é MINORE RISPETTO ALL'AL
 	\caption{Large test problems, $P_{max}= 100.$} \label{large}
 \end{table}
 
-
-\begin{table*}[h]\scriptsize
-	\begin{center}
-		\begin{tabular}{||c| c |c | c|| c||c ||c|| c||}\hline
-			\multirow{3}{*}{$p \in [1,3n]$} &\multirow{3}{*}{$n$} & \multirow{3}{*}{$n_A$} & \multirow{3}{*}{$n_B$} & \multirow{2}{*}{Time for } & \multirow{3}{*}{Iter}& \multirow{2}{*}{Absolute Error }& \multirow{3}{*}{Solved to Opt}\\
-			& &  &&  && & \\
-			& &  &&Incumbent (s)  &&(\%)& \\
-			
-			\hline
-			$p\in[1,180]$	 & $60$ & $30$   & $30$   &  1,83
-			&  119,8 &0&20/20
-			\\
-			
-			$p\in[1,300]$	 & $100$ & $50$   & $50$   &  6,207
-			& 81,9&0&20/20
-			\\
-			$p\in[1,600]$ &$200$  &  $100$	 & $100$ &202,428
-			&322,5&0&20/20
-			\\ 
-			
-			$p\in[1,900] $ & $300$	 & $150$   & $150$   & 782,097
-			& 339,4 &0,002 & 16/20
-			
-			\\
-			$p\in[1,1200]$ & $400$  & $200$	 & $200$ & 1087,752
-			&183 &0,004&11/20
-			
-			\\ 
-			
-			$p\in[1,1500]$ & $500$	 & $250$   & $250$   & 960,657
-			
-			& 91,5
-			&0,008 &2/20
-			
-			\\ \hline
-			
-		\end{tabular}
-	\end{center}
-
-	\caption{Test problems with large ranges} \label{largex}
-\end{table*}
-
-
 \begin{table}[h]\scriptsize
 	\begin{center}
-		\begin{tabular}{|| c |c | c|| c||c ||}\hline
+		\begin{tabular}{|| c | c|| c||c ||}\hline
 			
-			\multirow{3}{*}{$n$} & \multirow{3}{*}{$n_A$} & \multirow{3}{*}{$n_B$} & \multirow{3}{*}{Exit(s)} & \multirow{3}{*}{Iter}\\
-			&  &&  & \\
-			&    &    &  &\\\hline
-			$20$	 & \multirow{3}{*}{$10$}   & $10$   &$0,028$  & $19,1$
-			\\
-			$30$  &  & $20$	 & $0,017$
-			&$6,4$
-			\\ 
-			$40$  &  & $30$	 & $0,028$
-			&$5,6$
+			 \multirow{3}{*}{$n_A$} & \multirow{3}{*}{$n_B$} & \multirow{3}{*}{Exit (s)} & \multirow{3}{*}{Exit(s) our}\\
+		  &&  & \\
+		    &    & &\\\hline
+		 $30$   & $30$   &$1,82955
+		 $
+			& $0,0255$
+			\\ \hline
+		$50$ & $50$	 &$6,2069
+		$
+			&$0,0663$
 			\\ \hline
 			
-			$40$	 & \multirow{3}{*}{$20$}   & $20$   & $0,028$
-			& $5,7$
-			\\
-			$50$  &  & $30$	 &$0,08$
-			&$9,6$
-			\\ 
-			$60$  &  & $40$	 &$0,068$ &$3,7$\\ \hline
-			
-			$60$	 & \multirow{3}{*}{$30$}   & $30$   &  $0,067$
-			& $3,6$
-			\\
-			$70$  &  & $40$	 &$0,19$
-			&$7$
-			\\ 
-			$80$  &  & $50$	 & $0,32$
-			&$7,7$
+		 $100$   & $100$   &$ 202,42765
+		 $
+			&$1,8462$
+			\\ \hline
+		  $150$& $150$	 &$782,0972
+		  (*)$
+			&$12,2281$
 			\\ \hline
 			
-			$80$	 & \multirow{3}{*}{$40$}   & $40$   &  $0,091$
-			&$2,2$
-			\\
-			$90$  &  & $50$	 & $0,748$
-			&$11,6$
-			\\ 
-			$100$  &  & $60$	 & $0,347$
-			&$4,4$
-			\\ \hline 
+		 $200$   & $200$   &  $1087,75165
+		 (**)$
+			&$49,7305$
+			\\ \hline
+			 $250$   & $250$   &  $960,657
+			 (***)$
+			&$52,3910$
+			\\ \hline
 		\end{tabular}
+	\caption{Test problems with large ranges, $P_{max} = 3(n_A+n_B)$.} \label{largex}
+		\begin{tablenotes}
+			\item[a] 	(*) 4/20 instances have not been solved to optimality;
+			\item[b]	(**) 9/20 instances have not been solved to optimality;
+			\item[c]	(***) 18/20 instances have not been solved to optimality.
+		\end{tablenotes}
 	\end{center}
-	\caption{Small test problems, $P_{max}= 25.$} \label{smallBid}
+
+
+
 \end{table}
-
-\begin{table}[h]\scriptsize
-	\begin{center}
-		\begin{tabular}{|| c |c | c|| c||c ||}\hline
-			
-			\multirow{3}{*}{$n$} & \multirow{3}{*}{$n_A$} & \multirow{3}{*}{$n_B$} & \multirow{3}{*}{Exit (s)} & \multirow{3}{*}{Iter}\\
-			&  &&  & \\
-			&    &    &  &\\\hline
-			$100$	 & \multirow{2}{*}{$50$}   & $50$   & $0,416$
-			&$5,5$
-			\\
-			$150$  &  & $100$	 &$0,863$
-			&$3,6$
-			\\ \hline
-			
-			$200$	 & \multirow{2}{*}{$100$}   & $100$   & $1,705$
-			&$2,8$
-			\\
-			$250$  &  & $150$	 & $6,121$
-			&$4,4$
-			\\ \hline
-			
-		\end{tabular}
-	\end{center}
-	\caption{Medium test problems, $P_{max}= 50.$} \label{mediumBid}
-\end{table}
-
-
-\begin{table}[h]\scriptsize
-	\begin{center}
-		\begin{tabular}{|| c |c | c|| c||c ||}\hline
-			
-			\multirow{3}{*}{$n$} & \multirow{3}{*}{$n_A$} & \multirow{3}{*}{$n_B$} & \multirow{3}{*}{Exit (s)} & \multirow{3}{*}{Iter}\\
-			&  &&  & \\
-			&    &    & &\\\hline
-			$300$	 & \multirow{2}{*}{$150$}   & $150$   &$14,566$
-			& $5,3$
-			\\
-			$350$  &  & $200$	 &$ 62,988$
-			&$11,7$
-			\\ \hline
-			
-			$400$	 & \multirow{2}{*}{$200$}   & $200$   &$ 24,737$
-			&$3,2$
-			\\
-			$450$  &  & $250$	 &$135,138$
-			&$11,3$
-			\\ \hline
-			
-			$500$	 & $250$   & $250$   &  $49,91$
-			&$2,8$
-			\\ \hline
-			
-		\end{tabular}
-	\end{center}
-	\caption{Large test problems, $P_{max}= 100.$} \label{largeBid}
-\end{table}
-
-
-\begin{table*}[h]\scriptsize
-	\begin{center}
-		\begin{tabular}{||c| c |c | c|| c||c ||c|| c||}\hline
-			\multirow{3}{*}{$p \in [1,3n]$} &\multirow{3}{*}{$n$} & \multirow{3}{*}{$n_A$} & \multirow{3}{*}{$n_B$} & \multirow{2}{*}{Time for } & \multirow{3}{*}{Iter}& \multirow{2}{*}{Absolute Error }& \multirow{3}{*}{Solved to Opt}\\
-			& &  &&  && & \\
-			& &  &&Incumbent (s)  &&(\%)& \\
-			
-			\hline
-			$p\in[1,180]$	 & $60$ & $30$   & $30$   &  1,83
-			&  119,8 &0&20/20
-			\\
-			
-			$p\in[1,300]$	 & $100$ & $50$   & $50$   &  6,207
-			& 81,9&0&20/20
-			\\
-			$p\in[1,600]$ &$200$  &  $100$	 & $100$ &202,428
-			&322,5&0&20/20
-			\\ 
-			
-			$p\in[1,900] $ & $300$	 & $150$   & $150$   & 782,097
-			& 339,4 &0,002 & 16/20
-			
-			\\
-			$p\in[1,1200]$ & $400$  & $200$	 & $200$ & 1087,752
-			&183 &0,004&11/20
-			
-			\\ 
-			
-			$p\in[1,1500]$ & $500$	 & $250$   & $250$   & 960,657
-			
-			& 91,5
-			&0,008 &2/20
-			
-			\\ \hline
-			
-		\end{tabular}
-	\end{center}
-	\caption{Test problems with large ranges} \label{largexBid}
-\end{table*}
-
-
-
 
 \section{Conclusions}
-In this paper, we have proposed a genetic algorithm for balancing the average weighted completion times of two classes of jobs in a single machine scheduling problem.\\ For implementing each phase, we have tested different techniques: some of them taken from the literature, others introduced by us in this work. Experimental results have shown the importance, for generating the initial population, of using our technique that we have named \textit{bidirectional generation}.\\
-Numerical results have also proved the efficiency of our algorithm that is able to speed up the resolution process with respect to the algorithm proposed in literature in [2]. 
+In this paper, we have proposed a genetic algorithm for balancing the average weighted completion times of two classes of jobs in a single machine scheduling problem.\\ For implementing each phase, we have tested different techniques: some of them have been taken from the literature, while others have been introduced for the first time in this paper. It turned out that, for this problem, some of the techniques we introduced are able to outperform the others already existing in literature.\\
+Numerical results have also proved the efficiency of the new proposed approach that is able to significantly speed up the resolution process with respect to the state of the art algorithm. 
 
 
 

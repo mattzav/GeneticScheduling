@@ -74,9 +74,17 @@ public class Individual {
 		for (int i = 0; i < genotype.length; i++) {
 			toReturn += genotype[i] + " ";
 		}
-		toReturn += ", OBJ F = " + objF +  " ";
+		toReturn += ", OBJ F = " + objF + " ";
 		toReturn += ", FITNESS = " + fitness + "\n";
 
 		return toReturn;
+	}
+
+	public String getSolToString() {
+		String toReturn = "";
+		for (int i = 0; i < genotype.length; i++)
+			toReturn += String.valueOf(genotype[i])+ " "	;
+		return toReturn;
+
 	}
 }
